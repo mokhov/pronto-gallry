@@ -1,0 +1,45 @@
+.b-pane
+{
+    padding: 1em 1.9em 1.3em;
+    
+    background: #434343 url(b-pane.gif) 0 100% repeat-x;
+    color: #fff;
+}
+
+.b-pane__title
+{
+    font: 1.8em Arial;
+    
+    padding-bottom: 0.2em;
+    
+    text-shadow: 0 1px 1px #000;
+}
+
+.b-pane__additional
+{
+    overflow: hidden;
+}
+
+.b-pane__secondary-title
+{    
+    font: 1.3em/1.7em Arial;
+    
+    height: 1.7em;
+    
+    float: left;
+    vertical-align: middle;
+    
+    text-shadow: 0 1px 1px #000;
+    color: #e9e9e9;
+}
+
+.b-pane__actions-wrapper
+{
+    height: 1.7em;
+    
+    float: right;
+    
+    line-height: 1.7em;
+    text-align: right;
+    vertical-align: middle;
+}

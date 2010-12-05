@@ -1,0 +1,20 @@
+html, body
+{
+    height: 100%;
+}
+
+.b-layout
+{
+    min-height: 100%;
+    
+    background: #030303;
+}
+
+
+.b-layout__content
+{
+    position: relative;
+    z-index: 1;
+
+    padding-bottom: 80px;
+}
