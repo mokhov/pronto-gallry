@@ -1,9 +1,36 @@
 .b-footer
 {
     position: relative;
+	z-index: 1;
 
     margin-top: -80px;
-    height: 80px;
+	padding: 20px;
+	
+    height: 40px;
     clear: both;
 }
 
+.b-footer__logo
+{
+	float: left;
+}
+
+.b-footer__copyright
+{
+	font: 1.1em/1.3 Arial;
+	
+	padding-left: 15px;
+	
+	overflow: hidden;
+}
+
+.b-footer__copyright,
+.b-footer__copyright__link
+{
+	color: #717171;
+}
+
+.b-footer__copyright__link:hover
+{
+	color: #aaa;
+}

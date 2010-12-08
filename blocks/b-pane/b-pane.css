@@ -1,6 +1,6 @@
 .b-pane
 {
-    padding: 1em 1.9em 1.3em;
+    padding: 1em 1.9em 0.5em;
     
     background: #434343 url(b-pane.gif) 0 100% repeat-x;
     color: #fff;
@@ -13,6 +13,8 @@
     padding-bottom: 0.2em;
     
     text-shadow: 0 1px 1px #000;
+	
+	vertical-align: middle;
 }
 
 .b-pane__additional
@@ -22,7 +24,7 @@
 
 .b-pane__secondary-title
 {    
-    font: 1.3em/1.7em Arial;
+    font: 1.3em Arial;
     
     height: 1.7em;
     
@@ -33,13 +35,42 @@
     color: #e9e9e9;
 }
 
+ .b-pane__title .b-pane__secondary-title
+{
+	font: 0.7em Arial;
+	
+	display: inline-block;
+	
+	float: none;
+}
+
 .b-pane__actions-wrapper
 {
     height: 1.7em;
     
     float: right;
     
-    line-height: 1.7em;
     text-align: right;
     vertical-align: middle;
+}
+
+.b-pane__back
+{
+	font-size: 1em;
+	
+	display: inline-block;
+	
+	height: 14px;
+	padding-left: 18px;
+	
+	background: url(b-pane__back.png) 0 50% no-repeat;
+    
+    text-shadow: 0 1px 1px #000;
+    color: #a7a7a7;
+	text-decoration: none;
+}
+
+.b-pane__back:hover
+{
+	text-decoration: underline;
 }

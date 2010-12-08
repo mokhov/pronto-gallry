@@ -1,0 +1,9 @@
+.b-actions__action
+{
+    zoom: 1;
+}
+
+.b-actions__action__icon
+{
+    cursor: pointer;
+}

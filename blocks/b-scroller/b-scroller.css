@@ -1,0 +1,87 @@
+.b-scroller
+{
+	width: 100%;
+	
+	overflow: hidden;
+	position: relative;
+		
+	white-space: nowrap;
+	word-spacing: -0.25em;
+	
+	border-top: 1px solid #161616;
+	background: url(b-scroller.png);
+}
+
+.b-scroller__scrollable
+{
+	position: relative;
+	padding: 8px 5px;
+	
+	left: -100px;
+	
+	/* display: inline-block; */
+}
+
+.b-scroller__image
+{
+	margin: 2px 5px;
+	
+	display: inline-block;
+}
+
+.b-scroller__image_active
+{	
+	display: inline-block;
+	
+	margin: 0 3px;
+	
+	border: 2px solid #fff;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	box-shadow: 0 0 2px #000;
+	-moz-box-shadow: 0 0 2px #000;    /* Firefox */
+	-webkit-box-shadow: 0 0 2px #000; /* Safari, Chrome */
+}
+
+
+/* Скролл кастомный (begin) */ /**/
+	.b-scroller__scroll
+	{
+		position: relative;
+		height: 13px;
+		padding: 0 14px;
+		
+		border-top: 1px solid #787878;
+		background: url(b-scroller__scroll.png);
+	}
+	
+	.b-scroller__scroll__arrow
+	{
+		position: absolute;
+		left: 0;
+		width: 14px;
+		height: 13px;
+		
+		background: url(b-scroller__scroll__arrow.png);
+	}
+	
+	.b-scroller__scroll__arrow_right
+	{
+		left: 100%;
+		margin-left: -14px;
+		
+		background-position: 100% 0;
+	}
+	
+	.b-scroller__scroll__position
+	{
+		position: absolute;
+		height: 13px;
+		
+		border-left: 1px solid #cbcbcb;
+		border-right: 1px solid #cbcbcb;
+		background: url(b-scroller__scroll__position.png);
+	}
+/* Скролл кастомный (end) */ /**/

@@ -1,0 +1,44 @@
+.b-gallery__view
+{
+	zoom: 1;
+}
+
+.b-gallery__view__nav
+{
+	filter: alpha(opacity=15);
+}
+
+.b-gallery__view__nav:hover
+{
+	filter: alpha(opacity=100);
+}
+
+.b-gallery__view__nav:hover
+{
+	cursor: pointer;
+	zoom: 1;
+}
+
+* html .b-gallery__view__nav
+{
+	top: 50%;
+	
+	margin-top: -50px;
+	height: 100px;
+}
+
+* html .b-gallery__view__image__info__link
+{
+	top: 2.3em;
+}
+
+
+.b-gallery__view__image__wrapper
+{
+	display: inline;
+}
+
+.b-gallery__view__image__info_full[class]
+{
+	min-height: auto;	
+}

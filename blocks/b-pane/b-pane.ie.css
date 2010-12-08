@@ -1,4 +1,11 @@
 .b-pane__additional
 {
     zoom: 1;
+    
+    position: relative;
+}
+
+ .b-pane__title .b-pane__secondary-title
+{	
+	display: inline;
 }

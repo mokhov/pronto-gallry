@@ -1,6 +1,6 @@
 .b-actions__action
 {
-    font: 1.3em/1.7em Arial;
+    font: 1.3em Arial;
     
     position: relative;
     
@@ -22,17 +22,13 @@ a.b-actions__action:hover
     left: 0;
     top: 50%;
     
-    display: -moz-inline-box;
-    display: inline-block;
-    vertical-align: middle;
-    
     background: url(b-actions__action__icon.png) no-repeat;    
 }
 
 /* Share (begin) */ /**/
     .b-actions__action_share
     {
-        padding-left: 18px;
+        padding-left: 18px; /* width + 3px */
     }
     
     .b-actions__action_share .b-actions__action__icon
@@ -41,14 +37,14 @@ a.b-actions__action:hover
         width: 15px;
         height: 15px;
         
-        background-position: -18px 0;
+        background-position: -36px 0;
     }
 /* Share (end) */ /**/
 
-/* Share (begin) */ /**/
+/* Slideshow (begin) */ /**/
     .b-actions__action_slideshow
     {
-        padding-left: 21px;
+        padding-left: 21px; /* width + 3px */
     }
     
     .b-actions__action_slideshow .b-actions__action__icon
@@ -59,4 +55,52 @@ a.b-actions__action:hover
         
         background-position: 0 0;
     }
-/* Share (end) */ /**/
+/* Slideshow (end) */ /**/
+
+/* Download (begin) */ /**/
+    .b-actions__action_download
+    {
+        padding-left: 18px; /* width + 3px */
+    }
+    
+    .b-actions__action_download .b-actions__action__icon
+    {
+        margin-top: -7px;
+        width: 15px;
+        height: 15px;
+        
+        background-position: -51px 0;
+    }
+/* Download (end) */ /**/
+
+/* Show info (begin) */ /**/
+    .b-actions__action_show-info
+    {
+        padding-left: 20px; /* width + 3px */
+    }
+    
+    .b-actions__action_show-info .b-actions__action__icon
+    {
+        margin-top: -8px;
+        width: 17px;
+        height: 17px;
+        
+        background-position: -66px 0;
+    }
+/* Show info (end) */ /**/
+
+/* Show thumbnails (begin) */ /**/
+    .b-actions__action_show-thumbnails
+    {
+        padding-left: 20px; /* width + 3px */
+    }
+    
+    .b-actions__action_show-thumbnails .b-actions__action__icon
+    {
+        margin-top: -7px;
+        width: 17px;
+        height: 14px;
+        
+        background-position: -83px 0;
+    }
+/* Show info (end) */ /**/

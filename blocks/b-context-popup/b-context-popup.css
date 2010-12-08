@@ -1,0 +1,30 @@
+.b-context-popup
+{
+	position: absolute;
+	
+	padding: 10px;
+	
+	background: #fff;
+}
+
+.b-context-popup__image-info
+{
+	border-collapse: collapse;
+}
+
+.b-context-popup__image-info__info
+{
+	font: 1.1em Verdana;
+	
+	padding-top: 5px;
+}
+
+.b-context-popup__image-info__info_right
+{
+	text-align: right;
+}
+
+.b-context-popup__image-info__info__link:hover
+{
+	color: red;
+}

@@ -2,6 +2,12 @@
 
 @import url(reset.ie.css);
 
+@import url(b-actions/b-actions.ie.css);
+
+@import url(b-footer/b-footer.ie.css);
+
+@import url(b-gallery/b-gallery.ie.css);
+
 @import url(b-layout/b-layout.ie.css);
 
 @import url(b-pane/b-pane.ie.css);

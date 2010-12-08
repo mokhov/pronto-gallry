@@ -1,0 +1,178 @@
+.b-gallery
+{
+	padding: 15px;
+}
+
+.b-gallery__item
+{
+	margin: 5px;
+}
+
+.b-gallery__view
+{
+	position: relative;
+}
+
+/* Картинка (begin) */ /**/
+	.b-gallery__view__image
+	{	
+		text-align: center;
+	}
+
+	.b-gallery__view__image__img
+	{
+		box-shadow: 0 0 7px #000;
+		-moz-box-shadow: 0 0 7px #000;    /* Firefox */
+		-webkit-box-shadow: 0 0 7px #000; /* Safari, Chrome */
+
+	}
+	
+	.b-gallery__view__image__wrapper
+	{
+		position: relative;
+		z-index: 2;
+	
+		margin: 0 150px;
+		
+		display: inline-block;
+	}
+	
+	
+	.b-gallery__view__image__info
+	{
+		font-family: Arial;
+		
+		padding: 5px 10px;
+	}
+	
+	.b-gallery__view__image__info_full
+	{
+		position: relative;
+		
+		min-height: 4em;
+		
+		background: #919191;
+		
+		text-align: left;	
+	}
+	
+	.b-gallery__view__image__info__title
+	{
+		font-size: 2em;
+		
+		margin-bottom: 0.3em;
+	}
+	
+	.b-gallery__view__image__info__description
+	{
+		font-size: 1.3em;
+	}
+	
+	.b-gallery__view__image__info_full .b-gallery__view__image__info__description
+	{
+		margin-right: 100px;
+		
+		color: #333;
+	}
+	
+	.b-gallery__view__image__info__hide
+	{
+		font-size: 1.1em;
+		
+		position: absolute;
+		right: 10px;
+		top: 5px;		
+		
+		text-decoration: none;
+		color: #111;
+	}
+	
+	.b-gallery__view__image__info__hide:hover
+	{
+		color: #888;
+	}
+
+	.b-gallery__view__image__info__link
+	{
+		font-size: 1.1em;
+		
+		position: absolute;
+		right: 10px;
+		bottom: 6px;
+		
+		color: #194397;		
+	}
+	
+	.b-gallery__view__image__info__link:hover
+	{
+		color: #393f4b;
+	}
+	
+	.b-gallery__view__image__info_small
+	{
+		padding: 15px;
+		
+		color: #fff;
+	}
+	
+	.b-gallery__view__image__info_small .b-gallery__view__image__info__link,
+	.b-gallery__view__image__info_small .b-gallery__view__image__info__hide
+	{
+		display: none;
+	} 
+/* Картинка (end) */ /**/
+
+
+
+.b-gallery__view__nav
+{
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 50%;
+	z-index: 1;
+}
+
+.b-gallery__view__nav_prev
+{
+	left: 0;
+}
+
+.b-gallery__view__nav_next
+{
+	left: 50%;
+}
+
+.b-gallery__view__nav__arrow
+{
+	position: absolute;
+	top: 50%;	
+	
+	width: 57px;
+	height: 66px;
+	margin-top: -27px;
+	
+	background: url(b-gallery__view__nav__arrow.png);
+	
+	opacity: 0.15;
+}
+.b-gallery__view__nav:hover .b-gallery__view__nav__arrow
+{
+	opacity: 1;
+}
+
+.b-gallery__view__nav_prev .b-gallery__view__nav__arrow
+{
+	left: 0;
+	
+	margin-left: 41px;
+}
+
+.b-gallery__view__nav_next .b-gallery__view__nav__arrow
+{
+	right: 0;
+	
+	margin-right: 41px;
+	
+	background-position: 0 100%;
+}
