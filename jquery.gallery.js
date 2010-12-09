@@ -59,8 +59,10 @@ $(function(){
                     src: photos[i].src,
                     width: photos[i].thumb_inrow_width,
                     height: photos[i].thumb_inrow_height,
-                    'class': 'b-gallery__item'
+                    'class': 'b-gallery__item',
+                    id: 'photo_'+i
                 });
+                link.attr('href', photos[i].src);
                 link.append(image);
                 galleryCont.append(link);
             }

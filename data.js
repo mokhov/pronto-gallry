@@ -10,15 +10,6 @@ var galleryData = {
         thumb_width: 266,
         thumb_height: 200
     },{
-        title: "View from Eiffel Tower",
-        published: "02.05.2010",
-        src: "tmp/2.jpg",
-        width: 304,
-        height: 480,
-        thumb_src: "tmp/2_thumb.jpg",
-        thumb_width: 150,
-        thumb_height: 236
-    },{
         title: "Arc de Triomphe",
         published: "03.05.2010",
         src: "tmp/3.jpg",
@@ -45,6 +36,15 @@ var galleryData = {
         thumb_src: "tmp/5_thumb.jpg",
         thumb_width: 266,
         thumb_height: 200
+    },{
+        title: "View from Eiffel Tower",
+        published: "02.05.2010",
+        src: "tmp/2.jpg",
+        width: 304,
+        height: 480,
+        thumb_src: "tmp/2_thumb.jpg",
+        thumb_width: 150,
+        thumb_height: 236
     },{
         title: "Eifel Tower at Night",
         published: "06.05.2010",
