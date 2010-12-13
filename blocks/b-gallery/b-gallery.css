@@ -3,6 +3,12 @@
 	padding: 15px;
 }
 
+.b-gallery-slideshow
+{
+	padding: 15px;
+	display: none;
+}
+
 .b-gallery__item
 {
 	margin: 5px;
@@ -32,7 +38,7 @@
 		position: relative;
 		z-index: 2;
 	
-		margin: 0 150px;
+		/*margin: 0 150px;*/
 		
 		display: inline-block;
 	}

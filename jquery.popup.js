@@ -30,6 +30,7 @@ $(function(){
                 popupCont.animate(popupTargetPos);
             }
             
+            popupCont.find('.js-image-full').attr('rel', 'photo_'+elementIndex);
             popupCont.find('td.js-imageinfo-title').html(galleryData.photos[elementIndex].title);
             popupCont.find('td.js-imageinfo-published').html(galleryData.photos[elementIndex].published);
             popupCont.find('td.js-imageinfo-size').html(galleryData.photos[elementIndex].width+'x'+galleryData.photos[elementIndex].height);

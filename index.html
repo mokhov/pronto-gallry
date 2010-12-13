@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="jquery.gallery.js"></script>
 	<script type="text/javascript" src="jquery.popup.js"></script>
+	<script type="text/javascript" src="jquery.slideshow.js"></script>
     
 	<title>Пронто - Внутренняя</title>
 </head>
@@ -42,21 +43,25 @@
             </div>
 			
 			<div class="b-context-popup">
-				<table class="b-context-popup__image-info">					<tr>
+				<table class="b-context-popup__image-info">
+					<tr>
 						<td colspan="2">
-							<a href="tmp/1.jpg"><img src="tmp/1.jpg" height="250" alt="" /></a>
+							<a href="tmp/1.jpg" class="js-image-full"><img src="tmp/1.jpg" height="250" alt="" /></a>
 						</td>		
-					</tr>					<tr>
+					</tr>
+					<tr>
 						<td class="b-context-popup__image-info__info b-context-popup__image-info__info_left js-imageinfo-title">Eiffel Tower</td>
 						<td class="b-context-popup__image-info__info b-context-popup__image-info__info_right js-imageinfo-published">10.05.2010</td>
-					</tr>					<tr>
+					</tr>
+					<tr>
 						<td class="b-context-popup__image-info__info b-context-popup__image-info__info_left">
 							<a href="" class="b-context-popup__image-info__info__link js-imageinfo-filename">IMG_0485.jpg</a>
 						</td>
 						<td class="b-context-popup__image-info__info b-context-popup__image-info__info_right js-imageinfo-size">
 							800x600
 						</td>
-					</tr>				</table>
+					</tr>
+				</table>
 			</div>
 			
 			<div class="b-gallery">
@@ -67,7 +72,98 @@
 				<a href="tmp/5.jpg"><img src="tmp/5.jpg" height="200" alt="" class="b-gallery__item" /></a>
 				<a href="tmp/6.jpg"><img src="tmp/6.jpg" height="200" alt="" class="b-gallery__item" /></a>-->
 			</div>
+			
+			<div class="b-gallery-slideshow">
+				<div class="b-gallery__view">
+					<div class="b-gallery__view__image">
+						<div class="b-gallery__view__image__wrapper">
+							<img src="tmp/1.jpg" alt="" class="b-gallery__view__image__img" width="850" />
+							<div class="b-gallery__view__image__info b-gallery__view__image__info_small">
+								<div class="b-gallery__view__image__info__title">
+									Eiffel Tower
+								</div>
+								<div class="b-gallery__view__image__info__description">
+									The tower stands
+								</div>
+								<a href="" class="b-gallery__view__image__info__hide">
+									Hide info
+								</a>
+								<a href="" class="b-gallery__view__image__info__link">
+									IMG_0585.jpg
+								</a>
+							</div>
+						</div>
+					</div>
+					<a href="#" class="b-gallery__view__nav b-gallery__view__nav_prev">
+						<span class="b-gallery__view__nav__arrow"></span>
+					</a>
+					<a href="#" class="b-gallery__view__nav b-gallery__view__nav_next">
+						<span class="b-gallery__view__nav__arrow"></span>
+					</a>
+					
+				</div>
+			</div>
         </div>
+		<div class="b-scroller">
+			<div class="b-scroller__scrollable">
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image b-scroller__image_active">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+				<span class="b-scroller__image">
+					<img src="tmp/1.jpg" alt="" height="90" />
+				</span>
+			</div>
+			<div class="b-scroller__scroll">
+				<span class="b-scroller__scroll__arrow b-scroller__scroll__arrow_left"></span>
+				<span class="b-scroller__scroll__arrow b-scroller__scroll__arrow_right"></span>
+				<span class="b-scroller__scroll__position" style="width: 40%; left: 5%;"></span>
+			</div>
+		</div>
     </div>
     <div class="b-footer">
         <a href="" class="b-footer__logo"><img src="blocks/b-footer/b-footer__logo.png" alt="Pronto!" /></a>
