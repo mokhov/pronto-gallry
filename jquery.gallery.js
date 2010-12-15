@@ -89,5 +89,7 @@ $(function(){
         obeyConstraints();
         splitByRows();
         createImages();
+        $('.b-pane__title_text').text(galleryData.title);
+        $('.b-pane__photos-count_number').text(galleryData.photos.length);
     };
 })( jQuery );
