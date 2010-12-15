@@ -15,7 +15,7 @@ $(function(){
                 element: $('.b-pane'),
                 properties: {
                     height: {
-                        start: $('.b-pane').height()-1,
+                        start: $('.b-pane').height(),
                         end: 0
                     },
                     'padding-top': {
@@ -34,7 +34,7 @@ $(function(){
                 element: $('.b-scroller'),
                 properties: {
                     height: {
-                        start: $('.b-scroller').height()-1,
+                        start: $('.b-scroller').height(),
                         end: 0
                     }
                 }
@@ -50,6 +50,12 @@ $(function(){
             $('.b-footer').hide();
             $('.b-layout').addClass('b-layout_inner');
             
+            showImage(imageIndex);
+            
+            $('body').bind('mousemove', onMouseMove).css('overflow', 'hidden');
+        }
+        
+        var showImage = function(imageIndex) {
             var imageSize = getImageSize(imageIndex);
             slideshowCont.find('.b-gallery__view__image__img').attr({
                 src: options.data.photos[imageIndex].src
@@ -65,8 +71,6 @@ $(function(){
             location.hash = imageIndex;
             
             currentImage = imageIndex;
-            
-            $('body').bind('mousemove', onMouseMove).css('overflow', 'hidden');
         }
         
         var hide = function() {
@@ -104,7 +108,7 @@ $(function(){
                     for (control in animatedControls) {
                         props = animatedControls[control].properties;
                         for (property in props) {
-                            animatedControls[control].element.css(property, props[property].end + (props[property].start - props[property].end) * obj.pos + (props[property].units ? props[property].units : 1 ));
+                            animatedControls[control].element.css(property, props[property].end + (props[property].start - props[property].end) * obj.pos + (props[property].units ? props[property].units : 0 ));
                         }
                     }
                 }    
@@ -146,13 +150,50 @@ $(function(){
                     for (control in animatedControls) {
                         props = animatedControls[control].properties;
                         for (property in props) {
-                            animatedControls[control].element.css(property, props[property].start + (props[property].end - props[property].start) * obj.pos + (props[property].units ? props[property].units : '' ));
+                            animatedControls[control].element.css(property, props[property].start + (props[property].end - props[property].start) * obj.pos + (props[property].units ? props[property].units : 0 ));
                         }
                     }
                 }
             });
             $('.b-gallery__view__nav').hide();
             controlsHidden = true;
+        }
+        
+        var scrollImage = function(delta) {
+            var newCurentImage = parseInt(currentImage)+delta;
+            if (newCurentImage == galleryData.photos.length) {
+                newCurentImage = 0;
+            } else if (newCurentImage < 0) {
+                newCurentImage = galleryData.photos.length - 1;
+            }
+            var oldImage = $('.b-gallery__view__image__wrapper img');
+            var newImage = $('<img/>');
+            newImage.attr('src', galleryData.photos[newCurentImage].src);
+            $('body').append(newImage);
+            var imageSize = getImageSize(newCurentImage);
+            var windowSize = getWindowSize();
+            newImage.css({
+                position: 'absolute',
+                top: $('.b-gallery__view').position().top,
+                left: (delta > 0 ? -imageSize.width+'px' : windowSize.width),
+                'z-index': 1000,
+                width: imageSize.width,
+                height: imageSize.height
+            }).animate({
+                left: (windowSize.width - imageSize.width) / 2
+            });
+            oldImage.css('position', 'relative').animate({
+                left: delta*(windowSize.width - oldImage.position().left)
+            },{
+                complete: function(){
+                    oldImage.css({
+                        left: 0
+                    });
+                    showImage(newCurentImage);
+                    newImage.remove();
+                }    
+            });
+            currentImage = newCurentImage;
         }
         
         var getWindowSize = function() {
@@ -175,7 +216,7 @@ $(function(){
                 showControls();
             }
             clearTimeout(timer);
-            timer = setTimeout(hideControls, 5000);
+            timer = setTimeout(hideControls, 500000);
         }
         
         options.images.click(function(){
@@ -186,7 +227,19 @@ $(function(){
             show($('#'+$(this).attr('rel'))[0]);
             return false;
         });
+        $('.b-gallery__view__nav_next').click(function(){
+            scrollImage(1);
+            return false;    
+        });
+        $('.b-gallery__view__nav_prev').click(function(){
+            scrollImage(-1);
+            return false;    
+        });
         var timer;
         var controlsHidden = false;
+        if (location.hash) {
+            var hashImageIndex = parseInt(location.hash.substr(1));
+            show($('#photo_'+hashImageIndex)[0]);
+        }
     };
 })( jQuery );
