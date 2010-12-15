@@ -43,8 +43,13 @@ $(function(){
             img = $('<img/>');
             img.attr({
                 src: galleryData.photos[i].thumb_src,
-                height: 90
+                height: 90,
+                id: 'photo_thumb_'+i,
+                rel: 'photo_'+i
             });
+            if (parseInt(location.hash.substr(1)) == i) {
+                img.addClass('b-scroller__image_active');
+            }
             span = $('<span/>');
             span.append(img);
             span.addClass('b-scroller__image');
