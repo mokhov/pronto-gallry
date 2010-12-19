@@ -10,8 +10,6 @@
 	
 	border-top: 1px solid #161616;
 	background: url(b-scroller.png);
-	
-	display: none;
 }
 
 .b-scroller__scrollable

@@ -6,11 +6,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <!--[if gt IE 7]><!-->
-        <link rel="stylesheet" type="text/css" href="blocks/_imports.css" media="all">
+        <link rel="stylesheet" type="text/css" href="blocks/imports.css" media="all">
     <!--<![endif]-->
 
     <!--[if lt IE 8]>
-        <link rel="stylesheet" type="text/css" href="blocks/_imports.ie.css" media="all">
+        <link rel="stylesheet" type="text/css" href="blocks/imports.ie.css" media="all">
     <![endif]-->
     
 	<title>Пронто - Галерея</title>
@@ -40,7 +40,11 @@
 				<div class="b-gallery__view">
 					<div class="b-gallery__view__image">
 						<div class="b-gallery__view__image__wrapper">
-							<img src="tmp/1.jpg" alt="" class="b-gallery__view__image__img" width="850" />
+							<div class="b-gallery__view__image__height-wrapper" style="height: 200px;"> <!-- Этой обёртке нужно задавать высоту чтобы прибить к низу -->
+								<img src="tmp/1.jpg" alt="" class="b-gallery__view__image__img" width="850" />
+							</div>
+							
+							<!-- Для вывода полной инофрмации нужно заменить модификатор b-gallery__view__image__info_small на b-gallery__view__image__info_full -->
 							<div class="b-gallery__view__image__info b-gallery__view__image__info_small">
 								<div class="b-gallery__view__image__info__title">
 									Eiffel Tower
