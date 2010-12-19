@@ -39,9 +39,11 @@
 {
 	font: 0.7em Arial;
 	
-	display: inline-block;
+	/*display: inline-block;*/
 	
 	float: none;
+	
+	display: none;
 }
 
 .b-pane__actions-wrapper
@@ -68,6 +70,8 @@
     text-shadow: 0 1px 1px #000;
     color: #a7a7a7;
 	text-decoration: none;
+	
+	display: none;
 }
 
 .b-pane__back:hover

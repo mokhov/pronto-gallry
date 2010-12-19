@@ -4,20 +4,20 @@
 	width: 100%;
 	
 	overflow: hidden;
-		
+			
 	white-space: nowrap;
 	word-spacing: -0.25em;
 	
 	border-top: 1px solid #161616;
 	background: url(b-scroller.png);
+	
+	display: none;
 }
 
 .b-scroller__scrollable
 {
 	position: relative;
 	padding: 8px 5px;
-	
-	left: -100px;
 	
 	/* display: inline-block; */
 }
