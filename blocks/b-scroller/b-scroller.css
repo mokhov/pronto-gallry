@@ -1,9 +1,9 @@
-.b-scroller
+.b-scroller__wrapper
 {
+	position: relative;
 	width: 100%;
 	
 	overflow: hidden;
-	position: relative;
 		
 	white-space: nowrap;
 	word-spacing: -0.25em;
@@ -85,3 +85,30 @@
 		background: url(b-scroller__scroll__position.png);
 	}
 /* Скролл кастомный (end) */ /**/
+
+/* Область, которую можно потягать (begin) */ /**/
+	.b-scroller__drag-area
+	{
+		position: absolute;
+		left: 50%;
+		z-index: 1;
+		
+		width: 46px;
+		height: 7px;
+		margin: -4px 0 0 -23px;
+	
+	    cursor: move;	
+		background: url(b-scroller__drag-area.gif) no-repeat;
+	}
+	
+	.b-scroller__drag-area:not(b)
+	{
+	    cursor:url(data:image/gif;base64,R0lGODlhEAAQAJECAP///wAAAAAAAAAAACH5BAEAAAIALAAAAAAQABAAAAI0lC8RyLkBgFoMSotrVHsnhHWXdISS+DzRimIWy3Ii7CU0Tdn3mr93bvDBgMFfozg86mKHAgA7) 8 8,move;
+	}
+	
+	.b-scroller__drag-area_grabbing:not(b)
+	{
+	    cursor:url(data:image/gif;base64,R0lGODlhDQALAJECAP///wAAAAAAAAAAACH5BAEAAAIALAAAAAANAAsAAAIflBKXaBYAXoTswHtfshgv2VFgKJKZY0bNeDac575tAQA7) 6 3,move;
+	}
+
+/* Область, которую можно потягать (end) */ /**/
