@@ -1,5 +1,5 @@
 $(function(){
-   $('.b-scroller').scroller();
+    $('.b-scroller').scroller();
 });
 
 (function( $ ){

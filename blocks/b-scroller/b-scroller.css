@@ -1,3 +1,7 @@
+.b-scroller {
+	display: none;
+}
+
 .b-scroller__wrapper
 {
 	position: relative;
