@@ -43,6 +43,11 @@
 		display: inline-block;
 	}
 	
+	.b-gallery__view__image__height-wrapper
+	{
+		overflow: hidden;
+	}
+	
 	
 	.b-gallery__view__image__info
 	{
@@ -56,6 +61,7 @@
 		position: relative;
 		
 		min-height: 4em;
+		min-width: 250px;
 		
 		background: #919191;
 		

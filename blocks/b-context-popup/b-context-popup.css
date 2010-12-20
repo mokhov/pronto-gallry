@@ -8,6 +8,12 @@
 	display: none;
 }
 
+.b-context-popup__image
+{
+	overflow: hidden;
+	width: 600px; /* Иванов предложил это в качестве максимальной высоты */
+}
+
 .b-context-popup__image-info
 {
 	border-collapse: collapse;
