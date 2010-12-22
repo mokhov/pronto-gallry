@@ -104,3 +104,7 @@ a.b-actions__action:hover
         background-position: -83px 0;
     }
 /* Show info (end) */ /**/
+
+.b-actions__action_show-thumbnails, .b-actions__action_show-info, .b-actions__action_download {
+    display: none;
+}

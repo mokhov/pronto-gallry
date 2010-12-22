@@ -9,7 +9,7 @@ $(function(){
             var elementIndex = $(element).attr('id').split('_').pop();
             popupCont.css({
                 left: $(element).position().left-5,
-                top: $(element).position().top-5
+                top: $(element).position().top-5+parseInt($(element).css('margin-top'))
             }).show()
             popupCont.find('img').attr('src', $(element).attr('src')).css({
                 width: $(element).attr('width'),
@@ -23,9 +23,10 @@ $(function(){
             if (popupCont.position().left + galleryData.photos[elementIndex].thumb_width + 20 > $('.b-gallery').width()) {
                 popupTargetPos.left = $('.b-gallery').width() - galleryData.photos[elementIndex].thumb_width;    
             }
-            if (popupCont.position().top + galleryData.photos[elementIndex].thumb_height + 20 > $('.b-gallery').height() + $('.b-gallery').position().top) {
+            /*if (popupCont.position().top + galleryData.photos[elementIndex].thumb_height + 20 > $('.b-gallery').height() + $('.b-gallery').position().top) {
                 popupTargetPos.top = $('.b-gallery').height() + $('.b-gallery').position().top - galleryData.photos[elementIndex].thumb_height;
-            }
+            }*/
+            console.log(popupTargetPos);
             if (popupTargetPos.left || popupTargetPos.top) {
                 popupCont.animate(popupTargetPos);
             }

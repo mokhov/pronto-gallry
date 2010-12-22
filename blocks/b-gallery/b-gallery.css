@@ -3,16 +3,23 @@
 	padding: 15px;
 }
 
+.b-gallery a
+{
+	overflow: hidden;
+	float: left;
+	margin: 5px;
+}
+
 .b-gallery-slideshow
 {
 	padding: 15px;
 	display: none;
 }
 
-.b-gallery__item
+/*.b-gallery__item
 {
 	margin: 5px;
-}
+}*/
 
 .b-gallery__view
 {
