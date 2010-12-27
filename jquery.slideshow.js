@@ -313,7 +313,7 @@ $(function(){
             if (slideshowInterval) {
                 stopSlideshow();
             } else {
-                if (shown) {
+                if (!shown) {
                     show($('#photo_0')[0]);    
                 }
                 startSlideshow();
