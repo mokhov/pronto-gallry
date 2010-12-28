@@ -1,5 +1,5 @@
 $(function(){
-   $('.b-gallery').gallery({
+    $('.b-gallery').gallery({
         maxWidth: 266,
         minWidth: 200,
         maxHeight: 200,
