@@ -16,7 +16,8 @@
 {
 	position: relative;
 	padding: 8px 5px;
-	
+
+	white-space: nowrap;	
 	/* display: inline-block; */
 }
 
