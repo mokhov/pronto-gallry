@@ -11,7 +11,7 @@
 .b-context-popup__image
 {
 	overflow: hidden;
-	max-width: 600px; /* Иванов предложил это в качестве максимальной высоты */
+	max-width: 600px; /* Р�РІР°РЅРѕРІ РїСЂРµРґР»РѕР¶РёР» СЌС‚Рѕ РІ РєР°С‡РµСЃС‚РІРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РІС‹СЃРѕС‚С‹ */
 }
 
 .b-context-popup__image-info
@@ -35,3 +35,5 @@
 {
 	color: red;
 }
+
+.b-context-popup__image-info__image-cont {text-align: center;}

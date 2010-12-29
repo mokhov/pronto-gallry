@@ -4,42 +4,69 @@ $(function(){
 
 (function( $ ){
     $.fn.popup = function(options) {
+    	var PADDING = 10;
+    	
         var popupCont = this;
         var show = function(element){
-            var elementIndex = $(element).attr('id').split('_').pop();
-            popupCont.css({
-                left: $(element).position().left-10,
-                top: $(element).position().top-10+parseInt($(element).css('margin-top'))
-            }).show()
+            var elementIndex = $(element).attr('id').split('_').pop();            
+            
+            popupCont.show();            
             popupCont.find('img').attr('src', $(element).attr('src')).css({
                 width: $(element).attr('width'),
                 height: $(element).attr('height')    
-            });
-            popupCont.find('img').animate({
-                width: galleryData.photos[elementIndex].thumb_width,
-                height: galleryData.photos[elementIndex].thumb_height
-            });
-            var popupTargetPos = {};
-            if (popupCont.position().left + galleryData.photos[elementIndex].thumb_width + 20 > $('.b-gallery').width()) {
-                popupTargetPos.left = $('.b-gallery').width() - galleryData.photos[elementIndex].thumb_width;    
-            }
-            /*if (popupCont.position().top + galleryData.photos[elementIndex].thumb_height + 20 > $('.b-gallery').height() + $('.b-gallery').position().top) {
-                popupTargetPos.top = $('.b-gallery').height() + $('.b-gallery').position().top - galleryData.photos[elementIndex].thumb_height;
-            }*/
-            console.log(popupTargetPos);
-            if (popupTargetPos.left || popupTargetPos.top) {
-                popupCont.animate(popupTargetPos);
-            }
-            
+            });            
+
             popupCont.find('.js-image-full').attr('rel', 'photo_'+elementIndex);
             popupCont.find('td.js-imageinfo-title').html(galleryData.photos[elementIndex].title);
             popupCont.find('td.js-imageinfo-published').html(galleryData.photos[elementIndex].published);
             popupCont.find('td.js-imageinfo-size').html(galleryData.photos[elementIndex].width+'x'+galleryData.photos[elementIndex].height);
             popupCont.find('td.js-imageinfo-filename').html(galleryData.photos[elementIndex].src.split('/').pop());
-        }
+            
+            
+            var initLeft = $(element).position().left - (popupCont[0].offsetWidth - getElementWidth(element)) / 2;
+            popupCont.css({
+                left: initLeft,
+                top: $(element).position().top - PADDING
+            });            
+            
+            popupCont.animate(getPopupPosition(element, elementIndex));
+            
+            popupCont.find('img').animate({
+                width: galleryData.photos[elementIndex].thumb_width,
+                height: galleryData.photos[elementIndex].thumb_height
+            });
+        };
+        
+        var getPopupPosition = function(element, elementIndex) {
+        	var popupHeight = galleryData.photos[elementIndex].thumb_height + 2*PADDING;         	
+        	//для определения ширины временно установим картинке оригинальный размер
+        	var img = popupCont.find('img');
+        	var oldW = img.css('width');
+        	img.css({width: galleryData.photos[elementIndex].thumb_width});
+        	popupCont.show();
+        	popupWidth = popupCont[0].offsetWidth;
+        	img.css({width: oldW});
+        	
+        	var imgWidth = getElementWidth(element);
+        	var imgHeight = getElementHeight(element);        	
+        	
+        	return {
+        		left: $(element).position().left - (popupWidth - imgWidth)/2,
+        		top: $(element).position().top - (popupHeight - imgHeight)/2
+        	};
+        };
+        
+        var getElementWidth = function (element) {
+        	return $(element).width() < $(element).parent().width() ? $(element).width() : $(element).parent().width();
+        };
+        
+        var getElementHeight = function (element) {
+        	return $(element).height() < $(element).parent().height() ? $(element).height() : $(element).parent().height();
+        };
+        
         var hide = function(){
             popupCont.hide();
-        }
+        };
         var timeout;
         $('.b-gallery a').mouseover(function(){
             var element = $(this).find('img');
@@ -53,5 +80,5 @@ $(function(){
         $(popupCont).mouseleave(function(){
             hide();
         });
-    }   
+    };   
 })( jQuery );
