@@ -1,5 +1,7 @@
 .b-pane
 {
+	position: fixed;
+	
     padding: 1em 1.9em 0.5em;
     
     background: #434343 url(b-pane.gif) 0 100% repeat-x;
