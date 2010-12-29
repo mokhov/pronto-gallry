@@ -47,12 +47,12 @@ $(function(){
                 id: 'photo_thumb_'+i,
                 rel: 'photo_'+i
             });
-            if (parseInt(location.hash.substr(1)) == i) {
-                img.addClass('b-scroller__image_active');
-            }
             span = $('<span/>');
             span.append(img);
             span.addClass('b-scroller__image');
+            if (parseInt(location.hash.substr(1)) == i) {
+                span.addClass('b-scroller__image_active');
+            }
             $('.b-scroller__scrollable').append(span);
             paneWidth += galleryData.photos[i].thumb_width * ( 90 / galleryData.photos[i].thumb_height ) + 10;
         }

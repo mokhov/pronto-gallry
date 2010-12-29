@@ -82,7 +82,7 @@ $(function(){
             
             $('.b-pane__index-current').text(imageIndex+1);
             $('.b-scroller__image_active').removeClass('b-scroller__image_active');
-            $('#photo_thumb_'+imageIndex).addClass('b-scroller__image_active');
+            $('#photo_thumb_'+imageIndex).parent().addClass('b-scroller__image_active');
             $('.b-actions__action_download').attr('href', galleryData.photos[imageIndex].src);
             $('.b-gallery__view__image__info__title').text(galleryData.photos[imageIndex].title);
             $('.b-gallery__view__image__info__description').text(galleryData.photos[imageIndex].description);
