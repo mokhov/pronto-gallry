@@ -8,8 +8,8 @@ $(function(){
         var show = function(element){
             var elementIndex = $(element).attr('id').split('_').pop();
             popupCont.css({
-                left: $(element).position().left-5,
-                top: $(element).position().top-5+parseInt($(element).css('margin-top'))
+                left: $(element).position().left-10,
+                top: $(element).position().top-10+parseInt($(element).css('margin-top'))
             }).show()
             popupCont.find('img').attr('src', $(element).attr('src')).css({
                 width: $(element).attr('width'),
