@@ -9,7 +9,6 @@ $(function(){
     $.fn.slideshow = function(options) {
         var slideshowCont = this;
         var currentImage;
-        var shown = false;
         
         var animatedControls = {
             pane: {
@@ -59,8 +58,6 @@ $(function(){
             
             $('body').bind('mousemove', onUserAction).css('overflow', 'hidden');
             $('body').bind('click', onUserAction).css('overflow', 'hidden');
-            
-            shown = true;
         }
         
         var showImage = function(imageIndex) {
@@ -99,7 +96,7 @@ $(function(){
             $('.b-pane__counter').hide();
             $('.b-pane__back').hide();
             $('.b-pane__photos-count').show();
-            $('.b-actions__action_show-thumbnails, .b-actions__action_show-info, .b-actions__action_download').hide();
+            $('.b-actions__action_show-thumbnails, .b-actions__action_show-info, .b-actions__action_download').show();
             
             $('body').unbind('mousemove', onUserAction).css('overflow', 'auto');
             $('body').unbind('click', onUserAction).css('overflow', 'auto');
@@ -107,8 +104,6 @@ $(function(){
             clearTimeout(timer);
             
             location.hash = null;
-            
-            shown = false;
         }
         
         var getImageSize = function(imageIndex, withoutControls) {
@@ -203,26 +198,20 @@ $(function(){
             } else if (newCurentImage < 0) {
                 newCurentImage = galleryData.photos.length - 1;
             }
-            var oldImage = $('.b-gallery__view__image__wrapper');
-            var newImage = oldImage.clone();
-            newImage.find('img').attr('src', galleryData.photos[newCurentImage].src);
+            var oldImage = $('.b-gallery__view__image__wrapper img');
+            var newImage = $('<img/>');
+            newImage.attr('src', galleryData.photos[newCurentImage].src);
             $('body').append(newImage);
             var imageSize = getImageSize(newCurentImage);
             var windowSize = getWindowSize();
-            $('.b-gallery__view__image__info__title', newImage).text(galleryData.photos[newCurentImage].title);
-            $('.b-gallery__view__image__info__description', newImage).text(galleryData.photos[newCurentImage].description);
-            $('.b-gallery__view__image__info__link', newImage).text(galleryData.photos[newCurentImage].src.split('/').pop());
             newImage.css({
                 position: 'absolute',
                 top: $('.b-gallery__view').position().top+imageSize.vmargin,
                 left: (delta < 0 ? -imageSize.width+'px' : windowSize.width),
                 'z-index': 1000,
-                margin: 0
-            }).find('img').css({
                 width: imageSize.width,
                 height: imageSize.height
-            });
-            newImage.animate({
+            }).animate({
                 left: (windowSize.width - imageSize.width) / 2
             });
             oldImage.css('position', 'relative').animate({

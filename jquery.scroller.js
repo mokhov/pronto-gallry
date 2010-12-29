@@ -56,21 +56,13 @@ $(function(){
             $('.b-scroller__scrollable').append(span);
             paneWidth += galleryData.photos[i].thumb_width * ( 90 / galleryData.photos[i].thumb_height ) + 10;
         }
-        
-        var initScroller = function(){
-            var k = $('.b-scroller__scrollable').width() / paneWidth;
-            if (k>1) {
-                $('.b-scroller__scroll').hide();
-            } else {
-                $('.b-scroller__scroll__position').css('width', Math.round(k * 100)+'%');
-            }
-            scrollRatio = ( $('.b-scroller__scrollable').outerWidth() - $('.b-scroller__scroll__position').width() - 14*2) / ( paneWidth - $('.b-scroller__scrollable').outerWidth() );
+        var k = $('.b-scroller__scrollable').width() / paneWidth;
+        if (k>1) {
+            $('.b-scroller__scroll').hide();
+        } else {
+            $('.b-scroller__scroll__position').css('width', Math.round(k * 100)+'%');
         }
-        initScroller();
-        $('.b-pane').bind('show', function(){
-            initScroller();
-        });
         
-        var scrollRatio;
+        var scrollRatio = ( $('.b-scroller__scrollable').outerWidth() - $('.b-scroller__scroll__position').width() - 14*2) / ( paneWidth - $('.b-scroller__scrollable').outerWidth() );
     };
 })( jQuery );
