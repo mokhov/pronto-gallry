@@ -51,8 +51,8 @@ var galleryData = {
         thumb_width: 293,
         thumb_height: 200
     },{
-        title: "View from Eiffel Tower",
-        description: "View from Eiffel Tower",
+        title: "Viewfrom Eiffel Tower",
+        description: "View from Eiffel TowerView from Eiffel TowerView from Eiffel TowerView from Eiffel TowerView from Eiffel TowerView from Eiffel TowerView from Eiffel TowerView from Eiffel Tower",
         published: "02.05.2010",
         src: "tmp/2.jpg",
         width: 304,

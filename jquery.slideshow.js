@@ -235,16 +235,18 @@ $.easing.custom = function (x, t, b, c, d){
             $('.b-gallery__view__image__info__title', newImage).text(galleryData.photos[newCurentImage].title);
             $('.b-gallery__view__image__info__description', newImage).text(galleryData.photos[newCurentImage].description);
             $('.b-gallery__view__image__info__link', newImage).text(galleryData.photos[newCurentImage].src.split('/').pop());
+            newImage.find('img').css({
+                width: imageSize.width,
+                height: imageSize.height
+            });
+            imageSize.width = newImage[0].offsetWidth; 
             newImage.css({
                 position: 'absolute',
                 top: $('.b-gallery__view').position().top+imageSize.vmargin,
                 left: (delta < 0 ? -imageSize.width+'px' : windowSize.width),
                 'z-index': 1000,
                 margin: 0
-            }).find('img').css({
-                width: imageSize.width,
-                height: imageSize.height
-            });
+            })
             
             newImage.animate({
                 left: (windowSize.width - imageSize.width) / 2
