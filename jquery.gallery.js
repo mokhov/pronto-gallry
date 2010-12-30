@@ -55,33 +55,6 @@ $(function(){
             	
             	photos[i].thumb_fixed_width = width;
                 photos[i].thumb_fixed_height = height;
-            	
-            	/*
-                if (photos[i].thumb_width > options.maxWidth) {
-                	var heightAfterResize = photos[i].thumb_height * (options.maxWidth / photos[i].thumb_width); 
-                    if (heightAfterResize < options.minHeight) {
-                        photos[i].thumb_fixed_height = options.minHeight;
-                        photos[i].thumb_fixed_width = photos[i].thumb_width * (options.minHeight / photos[i].thumb_height);
-                        photos[i].thumb_cont_width = options.maxWidth;
-                        photos[i].thumb_cont_height = options.maxHeight;
-                    } else {
-                        photos[i].thumb_fixed_height = photos[i].thumb_height * (options.maxWidth / photos[i].thumb_width);
-                        photos[i].thumb_fixed_width = options.maxWidth;
-                    }
-                } else if (photos[i].thumb_height > options.maxHeight) {
-                    if (photos[i].thumb_width * (options.maxHeight / photos[i].thumb_height) < options.minWidth) {
-                        photos[i].thumb_fixed_width = options.minWidth;
-                        photos[i].thumb_fixed_height= photos[i].thumb_height * (options.minWidth / photos[i].thumb_width);
-                        photos[i].thumb_cont_width = options.minWidth;
-                        photos[i].thumb_cont_height = options.maxHeight;
-                    } else {
-                        photos[i].thumb_fixed_width = photos[i].thumb_width * (options.maxHeight / photos[i].thumb_height);
-                        photos[i].thumb_fixed_height = options.maxHeight;
-                    }
-                } else {
-                    photos[i].thumb_fixed_width = photos[i].thumb_width;
-                    photos[i].thumb_fixed_height = photos[i].thumb_height;                    
-                }*/
             }
         };
         

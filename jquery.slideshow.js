@@ -5,6 +5,21 @@ $(function(){
     });
 });
 
+$.easing.custom = function (x, t, b, c, d){
+	var tt = t/d;
+	
+	var k = 0.4;
+	
+	if(tt < 0.5)
+		return .5 * (1 - Math.sqrt(1 - tt/k) * Math.sqrt(k*2));
+	else
+		return .5 * (1 + Math.sqrt((tt-.5)/k) * Math.sqrt(k*2));
+	
+	var s = 1.70158; 
+	if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
+	return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+};
+
 (function( $ ){
     $.fn.slideshow = function(options) {
         var slideshowCont = this;
@@ -230,27 +245,30 @@ $(function(){
                 width: imageSize.width,
                 height: imageSize.height
             });
+            
             newImage.animate({
                 left: (windowSize.width - imageSize.width) / 2
-            });
+            }, 500, 'custom');
             //остановим таймер салйдшоу, если оно запущено
             if(isSlideshowStarted)
             	clearInterval(slideshowInterval);
             
-            oldImage.css('position', 'relative').animate({
-                left: delta*(oldImage.position().left - windowSize.width)
-            },{
-                complete: function(){
+            oldImage.css('position', 'relative').animate(
+            	{
+	                left: delta*(oldImage.position().left - windowSize.width)
+	            }
+            	, 500, 'custom',
+            	function(){
                     oldImage.css({
                         left: 0
                     });
                     showImage(newCurentImage);
                     newImage.remove();
                     //возобюновим слайдшоу
-                    if(isSlideshowStarted)
+                    if(isSlideshowStarted())
                     	slideshowInterval = setInterval(scrollImageSlideshow, 3000);
-                }    
-            });
+                }
+            );
             currentImage = newCurentImage;
         };
         

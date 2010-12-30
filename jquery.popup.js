@@ -45,7 +45,7 @@ $(function(){
             }; 
             resize.resize(resultImageSize.width, resultImageSize.height, DURATION);            
             //анимируем конейнер картинки            
-        	imgCont.animate(resultImageSize, DURATION);
+        	imgCont.animate(resultImageSize, DURATION, 'linear');
         };
 
         var getPopupPosition = function(element, elementIndex) {
