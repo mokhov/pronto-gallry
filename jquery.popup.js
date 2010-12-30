@@ -18,11 +18,15 @@ $(function(){
             popupCont.show();            
             popupCont.find('img').attr('src', $(element).attr('src')).css(initSize);            
 
+            var data = galleryData.photos[elementIndex];
+            
             popupCont.find('.js-image-full').attr('rel', 'photo_'+elementIndex);
-            popupCont.find('td.js-imageinfo-title').html(galleryData.photos[elementIndex].title);
-            popupCont.find('td.js-imageinfo-published').html(galleryData.photos[elementIndex].published);
-            popupCont.find('td.js-imageinfo-size').html(galleryData.photos[elementIndex].width+'x'+galleryData.photos[elementIndex].height);
-            popupCont.find('td.js-imageinfo-filename').html(galleryData.photos[elementIndex].src.split('/').pop());
+            popupCont.find('td.js-imageinfo-title').html(data.title);
+            popupCont.find('td.js-imageinfo-published').html(data.published);
+            popupCont.find('td.js-imageinfo-size').html(data.width+'x'+data.height);
+            popupCont.find('a.js-imageinfo-filename')
+            	.attr('href', data.src)
+            	.html(data.src.split('/').pop());
             
             var imgCont = popupCont.find('a.b-context-popup__image');
         	imgCont.css(initSize);
@@ -32,9 +36,7 @@ $(function(){
                 left: initLeft,
                 top: $(element).position().top - PADDING
             });  
-            
-            //imgCont.css({width: });
-            
+
             popupCont.animate(getPopupPosition(element, elementIndex), DURATION);            
             var resize = new ImageResize(popupCont.find('img'));
             var resultImageSize = {

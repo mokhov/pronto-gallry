@@ -56,7 +56,10 @@ a.b-actions__action:hover
         background-position: 0 0;
     }
 /* Slideshow (end) */ /**/
-
+	.b-actions__action_slideshow.stop .b-actions__action__icon
+	{
+		background-position: -18px 0;
+	}
 /* Download (begin) */ /**/
     .b-actions__action_download
     {
