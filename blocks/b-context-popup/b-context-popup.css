@@ -11,7 +11,9 @@
 .b-context-popup__image
 {
 	overflow: hidden;
-	max-width: 600px; /* Р�РІР°РЅРѕРІ РїСЂРµРґР»РѕР¶РёР» СЌС‚Рѕ РІ РєР°С‡РµСЃС‚РІРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РІС‹СЃРѕС‚С‹ */
+	max-width: 600px; 
+	display: block;	
+	margin: 0 auto;
 }
 
 .b-context-popup__image-info

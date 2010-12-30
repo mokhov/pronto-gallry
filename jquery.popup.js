@@ -5,16 +5,18 @@ $(function(){
 (function( $ ){
     $.fn.popup = function(options) {
     	var PADDING = 10;
+    	var DURATION = 200;
     	
         var popupCont = this;
         var show = function(element){
             var elementIndex = $(element).attr('id').split('_').pop();            
             
-            popupCont.show();            
-            popupCont.find('img').attr('src', $(element).attr('src')).css({
+            var initSize = {
                 width: $(element).attr('width'),
                 height: $(element).attr('height')    
-            });            
+            };
+            popupCont.show();            
+            popupCont.find('img').attr('src', $(element).attr('src')).css(initSize);            
 
             popupCont.find('.js-image-full').attr('rel', 'photo_'+elementIndex);
             popupCont.find('td.js-imageinfo-title').html(galleryData.photos[elementIndex].title);
@@ -22,19 +24,26 @@ $(function(){
             popupCont.find('td.js-imageinfo-size').html(galleryData.photos[elementIndex].width+'x'+galleryData.photos[elementIndex].height);
             popupCont.find('td.js-imageinfo-filename').html(galleryData.photos[elementIndex].src.split('/').pop());
             
-            
+            var imgCont = popupCont.find('a.b-context-popup__image');
+        	imgCont.css(initSize);
+                    	
             var initLeft = $(element).position().left - (popupCont[0].offsetWidth - getElementWidth(element)) / 2;
             popupCont.css({
                 left: initLeft,
                 top: $(element).position().top - PADDING
-            });            
+            });  
             
-            popupCont.animate(getPopupPosition(element, elementIndex));
+            //imgCont.css({width: });
             
-            popupCont.find('img').animate({
-                width: galleryData.photos[elementIndex].thumb_width,
-                height: galleryData.photos[elementIndex].thumb_height
-            });
+            popupCont.animate(getPopupPosition(element, elementIndex), DURATION);            
+            var resize = new ImageResize(popupCont.find('img'));
+            var resultImageSize = {
+            	width: galleryData.photos[elementIndex].thumb_width,
+            	height: galleryData.photos[elementIndex].thumb_height
+            }; 
+            resize.resize(resultImageSize.width, resultImageSize.height, DURATION);            
+            //анимируем конейнер картинки            
+        	imgCont.animate(resultImageSize, DURATION);
         };
         
         var getPopupPosition = function(element, elementIndex) {
