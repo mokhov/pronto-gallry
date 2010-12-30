@@ -1,9 +1,9 @@
 $(function(){
     $('.b-gallery').gallery({
-        maxWidth: 266,
-        minWidth: 200,
-        maxHeight: 200,
-        minHeight: 150,
+        maxWidth: 300,
+        minWidth: 100,
+        maxHeight: 180,
+        minHeight: 90,
         interval: 10,
         data: galleryData
     });
@@ -14,12 +14,52 @@ $(function(){
         
         var getGalleryContWidth = function(){
             return galleryCont.width();
-        }
+        };
         
         var obeyConstraints = function() {
             for (var i=0, n=data.photos.length, photos=data.photos; i<n; i++) {
+            	var width = photos[i].thumb_width * .9;
+            	var height = photos[i].thumb_height * .9;
+            	//ресайзим по высоте
+            	if(height > options.maxHeight) {
+	            	width *= options.maxHeight / height;
+	            	height = options.maxHeight;
+            	}
+            	//если вылезли за максимальную ширину - уменьшаем высоту
+            	if(width > options.maxWidth) {
+            		height = height * options.maxWidth / width;    		
+            		width = options.maxWidth;
+            	}
+            	
+            	if(height < options.minHeight) {
+        			var newHeight = photos[i].thumb_height > options.minHeight ? options.minHeight : photos[i].thumb_height;  
+        			photos[i].thumb_cont_width = options.maxWidth;
+        			
+        			width *= newHeight / height; 
+        			height = newHeight;
+        		}
+            	//если после всех манипуляций ширина получилась меньше минимальной - добить полями
+            	if(width < options.minWidth) {
+            		if(photos[i].thumb_width > options.minWidth) {
+            			var newWidth = options.minWidth;
+            		} else {
+            			var newWidth = photos[i].thumb_width;
+            			photos[i].thumb_cont_width = options.minWidth;
+            		}
+            		height *= newWidth / width;
+            		width = newWidth;
+            	}
+            	
+            	//фиксируем высоту контейнера
+            	photos[i].thumb_cont_height = options.maxHeight;
+            	
+            	photos[i].thumb_fixed_width = width;
+                photos[i].thumb_fixed_height = height;
+            	
+            	/*
                 if (photos[i].thumb_width > options.maxWidth) {
-                    if (photos[i].thumb_height * (options.maxWidth / photos[i].thumb_width) < options.minHeight) {
+                	var heightAfterResize = photos[i].thumb_height * (options.maxWidth / photos[i].thumb_width); 
+                    if (heightAfterResize < options.minHeight) {
                         photos[i].thumb_fixed_height = options.minHeight;
                         photos[i].thumb_fixed_width = photos[i].thumb_width * (options.minHeight / photos[i].thumb_height);
                         photos[i].thumb_cont_width = options.maxWidth;
@@ -40,10 +80,10 @@ $(function(){
                     }
                 } else {
                     photos[i].thumb_fixed_width = photos[i].thumb_width;
-                    photos[i].thumb_fixed_height = photos[i].thumb_height;
-                }
+                    photos[i].thumb_fixed_height = photos[i].thumb_height;                    
+                }*/
             }
-        }
+        };
         
         var splitByRows = function(){
             var curImagesWidth = 0;
@@ -54,22 +94,24 @@ $(function(){
                 photos[i].thumb_inrow_height = photos[i].thumb_fixed_height;
                 curImagesWidth += (photos[i].thumb_cont_width ? photos[i].thumb_cont_width : photos[i].thumb_fixed_width) + options.interval;
                 if (curImagesWidth >= galleryContWidth) {
-                    k = (curImagesWidth - (i-firstInRow+1)*options.interval) / (galleryContWidth - (i-firstInRow+1)*options.interval);
+                    //k = (curImagesWidth - (i-firstInRow-1)*options.interval) / (galleryContWidth - (i-firstInRow+1)*options.interval);
+                	k = (galleryContWidth - (i-firstInRow)*options.interval) / curImagesWidth;
                     for (j=firstInRow; j<=i; j++) {
-                        photos[j].thumb_inrow_width = Math.floor(photos[j].thumb_fixed_width / k);
-                        photos[j].thumb_inrow_height = Math.floor(photos[j].thumb_fixed_height / k);
+                    	
+                        photos[j].thumb_inrow_width = Math.round(photos[j].thumb_fixed_width * k);
+                        photos[j].thumb_inrow_height = Math.round(photos[j].thumb_fixed_height * k);
                         if (photos[j].thumb_cont_width) {
-                            photos[j].thumb_cont_width = Math.floor(photos[j].thumb_cont_width / k);
+                            photos[j].thumb_cont_width = Math.round(photos[j].thumb_cont_width * k);
                         }
                         if (photos[j].thumb_cont_height) {
-                            photos[j].thumb_cont_height = Math.floor(photos[j].thumb_cont_height / k);
+                            photos[j].thumb_cont_height = Math.round(photos[j].thumb_cont_height * k);
                         }
                     }
                     curImagesWidth = 0;
                     firstInRow = i + 1;
                 }
             }
-        }
+        };
         
         var createImages = function(){
             var image, link;
@@ -88,7 +130,7 @@ $(function(){
                 galleryCont.append(link);
             }
             setInrowSizes();
-        }
+        };
         
         var setInrowSizes = function(){
             var photos = galleryData.photos;

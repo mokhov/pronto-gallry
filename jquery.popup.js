@@ -31,10 +31,10 @@ $(function(){
             var imgCont = popupCont.find('a.b-context-popup__image');
         	imgCont.css(initSize);
                     	
-            var initLeft = $(element).position().left - (popupCont[0].offsetWidth - getElementWidth(element)) / 2;
+            var initLeft = $(element).offset().left - (popupCont[0].offsetWidth - getElementWidth(element)) / 2;
             popupCont.css({
                 left: initLeft,
-                top: $(element).position().top - PADDING
+                top: $(element).offset().top - PADDING
             });  
 
             popupCont.animate(getPopupPosition(element, elementIndex), DURATION);            
@@ -47,11 +47,11 @@ $(function(){
             //анимируем конейнер картинки            
         	imgCont.animate(resultImageSize, DURATION);
         };
-        
+
         var getPopupPosition = function(element, elementIndex) {
         	var popupHeight = galleryData.photos[elementIndex].thumb_height + 2*PADDING;         	
         	//для определения ширины временно установим картинке оригинальный размер
-        	var img = popupCont.find('img');
+        	var img = popupCont.find('a.b-context-popup__image');
         	var oldW = img.css('width');
         	img.css({width: galleryData.photos[elementIndex].thumb_width});
         	popupCont.show();
@@ -59,11 +59,17 @@ $(function(){
         	img.css({width: oldW});
         	
         	var imgWidth = getElementWidth(element);
-        	var imgHeight = getElementHeight(element);        	
+        	var imgHeight = getElementHeight(element);   
+        	
+        	var left = $(element).offset().left - (popupWidth - imgWidth)/2;
+        	if(left < 0)
+        		left = 0;
+        	if(left + popupWidth > document.body.offsetWidth)
+        		left = document.body.offsetWidth - popupWidth;
         	
         	return {
-        		left: $(element).position().left - (popupWidth - imgWidth)/2,
-        		top: $(element).position().top - (popupHeight - imgHeight)/2
+        		left: left,
+        		top: $(element).offset().top - (popupHeight - imgHeight)/2
         	};
         };
         
