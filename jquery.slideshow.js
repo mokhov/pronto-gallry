@@ -57,15 +57,23 @@ $.easing.custom = function (x, t, b, c, d){
         if(isSroller)
         	maxHeight -= 129;
         
-        var width, height, vmargin;
-        if (maxWidth / options.data.photos[imageIndex].width > maxHeight / options.data.photos[imageIndex].height)  {
-            height = maxHeight;
-            width = options.data.photos[imageIndex].width * (maxHeight / options.data.photos[imageIndex].height);
-            vmargin = 0;
+        var vmargin = 0;        
+        var height = options.data.photos[imageIndex].height;
+        var width = options.data.photos[imageIndex].width;
+        
+        if(width > maxWidth || height > maxHeight) {
+	        if (maxWidth / options.data.photos[imageIndex].width > maxHeight / options.data.photos[imageIndex].height)  {
+	            height = maxHeight;
+	            width = options.data.photos[imageIndex].width * (maxHeight / options.data.photos[imageIndex].height);
+	        } else {
+	            width = maxWidth;
+	            height = options.data.photos[imageIndex].height * (maxWidth / options.data.photos[imageIndex].width);	        	
+	            vmargin = (maxHeight - height) / 2;
+	        }
+        
         } else {
-            width = maxWidth;
-            height = options.data.photos[imageIndex].height * (maxWidth / options.data.photos[imageIndex].width);
-            vmargin = (maxHeight - height) / 2;
+        	//image don't need resize
+        	vmargin = (maxHeight - height) / 2;
         }
         return {width: Math.round(width), height:  Math.round(height), vmargin: Math.round(vmargin)};
     };
