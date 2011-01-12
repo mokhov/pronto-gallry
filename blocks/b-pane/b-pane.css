@@ -3,8 +3,14 @@
     padding: 1em 1.9em 0.5em;
     
     background: #434343 url(b-pane.gif) 0 100% repeat-x;
-    color: #fff;
+    color: #fff;    
 }
+
+.body-gallery .b-pane {
+	position: fixed;
+    top: 0;
+    width: 100%;
+} 
 
 .b-pane__title
 {

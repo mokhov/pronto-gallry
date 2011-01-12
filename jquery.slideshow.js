@@ -21,12 +21,60 @@ $.easing.custom = function (x, t, b, c, d){
 };
 
 (function( $ ){
-    $.fn.slideshow = function(options) {
-        var slideshowCont = this;
-        var currentImage;
-        var shown = false;
+	var options;
+	var currentImage;
+	var slideshowCont;
+	var isScrollerHidden = false;
+	
+	var getWindowSize = function() {
+        var myWidth = 0, myHeight = 0;
+        if( typeof( window.innerWidth ) == 'number' ) {
+            myWidth = window.innerWidth;
+            myHeight = window.innerHeight;
+        } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+            myWidth = document.documentElement.clientWidth;
+            myHeight = document.documentElement.clientHeight;
+        } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+            myWidth = document.body.clientWidth;
+            myHeight = document.body.clientHeight;
+        }            
+        return {width: myWidth, height: myHeight};
+    };
+	
+	var getImageSize = function(imageIndex, withoutControls, forceScroller) {
+        var windowSize = getWindowSize();
+        var maxWidth = windowSize.width - 15*2;
+        var maxHeight = windowSize.height - 15*2 - ($('.b-gallery__view__image__info').is(':visible') ? $('.b-gallery__view__image__info').outerHeight() : 0);
+        if (!withoutControls) {
+            maxWidth -= 150*2; 
+            maxHeight -= ($('.b-pane').is(':visible') ? 62 : 0);
+        }
         
-        var animatedControls = {
+        if(forceScroller !== undefined)
+        	var isSroller = forceScroller;
+        else
+        	var isSroller = !withoutControls && !isScrollerHidden && $('.b-scroller').is(':visible');
+        if(isSroller)
+        	maxHeight -= 129;
+        
+        var width, height, vmargin;
+        if (maxWidth / options.data.photos[imageIndex].width > maxHeight / options.data.photos[imageIndex].height)  {
+            height = maxHeight;
+            width = options.data.photos[imageIndex].width * (maxHeight / options.data.photos[imageIndex].height);
+            vmargin = 0;
+        } else {
+            width = maxWidth;
+            height = options.data.photos[imageIndex].height * (maxWidth / options.data.photos[imageIndex].width);
+            vmargin = (maxHeight - height) / 2;
+        }
+        return {width: Math.round(width), height:  Math.round(height), vmargin: Math.round(vmargin)};
+    };
+	
+	
+	//управляет анимацией появления/изчезновения элементов управления
+	var AnimatedControls = function() {
+		//анимированные элементы
+		var animatedControls = {
             pane: {
                 element: $('.b-pane'),
                 properties: {
@@ -56,8 +104,137 @@ $.easing.custom = function (x, t, b, c, d){
                 }
             }
         };
+		
+		var controlsHidden = false;
+		
+		this.isHidden = function() {return controlsHidden;};
+		
+		function isControlInList(control, controls) {
+			if(!controls)
+				return true;
+			for(var i=0; i<controls.length; i++) {
+				if(controls[i] == control)
+					return true;
+			}
+			return false;
+		};
+		
+		var eachControlProp = function(controls, lambda) {
+			var props;
+            for (var control in animatedControls) {
+            	if(!isControlInList(control, controls))
+            		continue;
+            	
+            	if(!controls && isScrollerHidden && control == 'scroller')
+            		continue;
+            	
+                props = animatedControls[control].properties;
+                for (var property in props) {
+                	lambda(animatedControls[control], property, props[property]);                    
+                }
+            }
+		};
+		
+		var showControls = function(controls) {
+			if(controls && controls[0] == 'scroller')
+        		var imageSize = getImageSize(currentImage, controlsHidden, true);
+        	else
+        		var imageSize = getImageSize(currentImage);
+			
+            slideshowCont.find('.b-gallery__view__image__img').animate({
+                width: imageSize.width,
+                height: imageSize.height
+            },{
+                step: function(now, obj){                	
+                	eachControlProp(controls, function(control, propName, property){
+                		control.element.css(propName, property.end + (property.start - property.end) * obj.pos + (property.units ? property.units : 0 ));
+                	});
+                }    
+            });
+            
+            if(!controls) {
+            	$('.b-pane').show();
+            	$('.b-gallery__view__nav').show();
+            }
+        };
+        this.show = function(){
+        	showControls();
+        	controlsHidden = false;
+        };
+        
+        var hideControls = function(controls) {
+        	if(controls && controls[0] == 'scroller')
+        		var imageSize = getImageSize(currentImage, false, false);
+        	else
+        		var imageSize = getImageSize(currentImage, true);
+            
+            $('.b-scroller, .b-pane').css('overflow', 'hidden');            
+        	animatedControls.pane.properties.height.start = $('.b-pane').height();
+        	if(!isScrollerHidden)
+        		animatedControls.scroller.properties.height.start = $('.b-scroller').height();
+            if (imageSize.vmargin > 0) {
+                animatedControls.wrapper = {
+                    element: $('.b-gallery__view__image__wrapper'),
+                    properties: {
+                        'margin-top': {
+                            start: parseInt($('.b-gallery__view__image__wrapper').css('margin-top')),
+                            end: imageSize.vmargin,
+                            units: 'px'
+                        },
+                        'margin-bottom': {
+                            start: parseInt($('.b-gallery__view__image__wrapper').css('margin-bottom')),
+                            end: imageSize.vmargin,
+                            units: 'px'
+                        }
+                    }
+                };
+            } else {
+                delete animatedControls.wrapper;
+            }
+            slideshowCont.find('.b-gallery__view__image__img').animate({
+                width: imageSize.width,
+                height: imageSize.height
+            },{
+                step: function(now, obj){
+                	eachControlProp(controls, function(control, propName, property){                		
+                		control.element.css(propName, property.start + (property.end - property.start) * obj.pos + (property.units ? property.units : 0 ));
+                	});                	
+                }
+            });
+            
+            if(!controls)
+            	$('.b-gallery__view__nav').hide();            
+        };
+        
+        this.hide = function() {
+        	hideControls();
+        	controlsHidden = true;
+        };
+        
+        this.hideScroller = function() {
+        	hideControls(['scroller','wrapper']);
+        	isScrollerHidden = true;
+        };
+        
+        this.showScroller = function() {
+        	isScrollerHidden = false;
+        	showControls(['scroller', 'wrapper']);
+        	
+        	$('.b-scroller').css({height:100});
+        };
+	};
+	
+	
+    $.fn.slideshow = function(_opt) {
+    	options = _opt;
+        slideshowCont = this;        
+        var shown = false;
+        
+        var animatedControls = new AnimatedControls();
         
         var show = function(element) {
+        	$(document.body).removeClass('body-gallery');
+        	
             var imageIndex = parseInt($(element).attr('id').split('_').pop());
             slideshowCont.show();
             $('.b-scroller').show();
@@ -79,7 +256,7 @@ $.easing.custom = function (x, t, b, c, d){
         };
         
         var showImage = function(imageIndex, sourceImage) {
-            var imageSize = getImageSize(imageIndex, controlsHidden);
+            var imageSize = getImageSize(imageIndex, animatedControls.isHidden());
             slideshowCont.find('.b-gallery__view__image__img').attr({
                 src: sourceImage ? sourceImage.src : options.data.photos[imageIndex].src
             }).css({
@@ -111,8 +288,10 @@ $.easing.custom = function (x, t, b, c, d){
         });
         
         var hide = function() {
-        	if(isSlideshowStarted)
+        	if(isSlideshowStarted())
         		stopSlideshow();
+        	
+        	$(document.body).addClass('body-gallery');
         	
             $('.b-scroller').hide();
             $('.b-gallery').show();
@@ -132,91 +311,6 @@ $.easing.custom = function (x, t, b, c, d){
             location.hash = null;
             
             shown = false;
-        };
-        
-        var getImageSize = function(imageIndex, withoutControls) {
-            var windowSize = getWindowSize();
-            var maxWidth = windowSize.width - 15*2;
-            var maxHeight = windowSize.height - 15*2 - ($('.b-gallery__view__image__info').is(':visible') ? $('.b-gallery__view__image__info').outerHeight() : 0);
-            if (!withoutControls) {
-                maxWidth -= 150*2; 
-                maxHeight -= ($('.b-pane').is(':visible') ? 62 : 0) + ($('.b-scroller').is(':visible') ? 129 : 0);
-            }
-            var width, height, vmargin;
-            if (maxWidth / options.data.photos[imageIndex].width > maxHeight / options.data.photos[imageIndex].height)  {
-                height = maxHeight;
-                width = options.data.photos[imageIndex].width * (maxHeight / options.data.photos[imageIndex].height);
-                vmargin = 0;
-            } else {
-                width = maxWidth;
-                height = options.data.photos[imageIndex].height * (maxWidth / options.data.photos[imageIndex].width);
-                vmargin = (maxHeight - height) / 2;
-            }
-            return {width: Math.round(width), height:  Math.round(height), vmargin: Math.round(vmargin)};
-        };
-        
-        var showControls = function() {
-            var imageSize = getImageSize(currentImage);
-            slideshowCont.find('.b-gallery__view__image__img').animate({
-                width: imageSize.width,
-                height: imageSize.height
-            },{
-                step: function(now, obj){
-                    var props;
-                    for (control in animatedControls) {
-                        props = animatedControls[control].properties;
-                        for (property in props) {
-                            animatedControls[control].element.css(property, props[property].end + (props[property].start - props[property].end) * obj.pos + (props[property].units ? props[property].units : 0 ));
-                        }
-                    }
-                }    
-            });
-            $('.b-pane').show();
-            //$('.b-scroller').show();
-            $('.b-gallery__view__nav').show();
-            controlsHidden = false;
-        };
-        
-        var hideControls = function() {
-            var imageSize = getImageSize(currentImage, true);
-            $('.b-scroller, .b-pane').css('overflow', 'hidden');
-            animatedControls.pane.properties.height.start = $('.b-pane').height();
-            animatedControls.scroller.properties.height.start = $('.b-scroller').height();
-            if (imageSize.vmargin > 0) {
-                animatedControls.wrapper = {
-                    element: $('.b-gallery__view__image__wrapper'),
-                    properties: {
-                        'margin-top': {
-                            start: parseInt($('.b-gallery__view__image__wrapper').css('margin-top')),
-                            end: imageSize.vmargin,
-                            units: 'px'
-                        },
-                        'margin-bottom': {
-                            start: parseInt($('.b-gallery__view__image__wrapper').css('margin-bottom')),
-                            end: imageSize.vmargin,
-                            units: 'px'
-                        }
-                    }
-                };
-            } else {
-                delete animatedControls.wrapper;
-            }
-            slideshowCont.find('.b-gallery__view__image__img').animate({
-                width: imageSize.width,
-                height: imageSize.height
-            },{
-                step: function(now, obj){
-                    var props;
-                    for (control in animatedControls) {
-                        props = animatedControls[control].properties;
-                        for (property in props) {
-                            animatedControls[control].element.css(property, props[property].start + (props[property].end - props[property].start) * obj.pos + (props[property].units ? props[property].units : 0 ));
-                        }
-                    }
-                }
-            });
-            $('.b-gallery__view__nav').hide();
-            controlsHidden = true;
         };
         
         var scrollImage = function(delta) {
@@ -246,12 +340,12 @@ $.easing.custom = function (x, t, b, c, d){
                 left: (delta < 0 ? -imageSize.width+'px' : windowSize.width),
                 'z-index': 1000,
                 margin: 0
-            })
+            });
             
             newImage.animate({
                 left: (windowSize.width - imageSize.width) / 2
             }, 500, 'custom');
-            //��������� ������ ��������, ���� ��� ��������
+            //остановим таймер салйдшоу, если оно запущено
             if(isSlideshowStarted)
             	clearInterval(slideshowInterval);
             
@@ -266,7 +360,7 @@ $.easing.custom = function (x, t, b, c, d){
                     });
                     showImage(newCurentImage);
                     newImage.remove();
-                    //����������� ��������
+                    //возобюновим слайдшоу
                     if(isSlideshowStarted())
                     	slideshowInterval = setInterval(scrollImageSlideshow, 3000);
                 }
@@ -303,9 +397,9 @@ $.easing.custom = function (x, t, b, c, d){
             $('.b-actions__action_slideshow span.text').text('Stop');
             $('.b-actions__action_slideshow').addClass('stop');
             
-            slideshow_isThumnails = $('.b-scroller').is(':visible');
-            
-            $('.b-scroller').hide();
+            slideshow_isThumnails = !isScrollerHidden;
+            if(slideshow_isThumnails)
+            	animatedControls.hideScroller();
             $('.b-actions__action_show-thumbnails').hide();
             $('.b-actions__action_download').hide();            
             
@@ -315,42 +409,30 @@ $.easing.custom = function (x, t, b, c, d){
         
         var stopSlideshow = function() {
         	if(slideshow_isThumnails)
-        		$('.b-scroller').show();
+        		animatedControls.showScroller();
+        	else
+        		showImage(currentImage);
             $('.b-actions__action_show-thumbnails').show();
             $('.b-actions__action_download').show();
-            $('.b-gallery__view__image__info').addClass('b-gallery__view__image__info_full').removeClass('b-gallery__view__image__info_small');
-            showImage(currentImage);
+            $('.b-gallery__view__image__info').addClass('b-gallery__view__image__info_full').removeClass('b-gallery__view__image__info_small');            
             clearInterval(slideshowInterval);
             $('.b-actions__action_slideshow span.text').text('Slideshow');
             $('.b-actions__action_slideshow').removeClass('stop');
             slideshowInterval = false;
         };
         
-        var getWindowSize = function() {
-            var myWidth = 0, myHeight = 0;
-            if( typeof( window.innerWidth ) == 'number' ) {
-                myWidth = window.innerWidth;
-                myHeight = window.innerHeight;
-            } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
-                myWidth = document.documentElement.clientWidth;
-                myHeight = document.documentElement.clientHeight;
-            } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
-                myWidth = document.body.clientWidth;
-                myHeight = document.body.clientHeight;
-            }            
-            return {width: myWidth, height: myHeight};
-        };
+        
         
         var onUserAction = function(){
-            if (controlsHidden) {
-                showControls();
+            if (animatedControls.isHidden()) {
+            	animatedControls.show();
             }
             clearTimeout(timer);
             
             if(isSlideshowStarted())
-            	timer = setTimeout(hideControls, 3000);
+            	timer = setTimeout(animatedControls.hide, 3000);
             else
-            	timer = setTimeout(hideControls, 10000);
+            	timer = setTimeout(animatedControls.hide, 2000);
         };
 
         options.images.click(function(){
@@ -401,21 +483,19 @@ $.easing.custom = function (x, t, b, c, d){
         $('.b-gallery__view__image__info__hide').click(toggleInfo);
         
         $('.b-actions__action_show-thumbnails').click(function(e){
-            if ($('.b-scroller').is(':visible')) {
-                $('.b-scroller').hide();
-                $('.b-actions__action_show-thumbnails span.text').text('Show thumbnails');
+            if (isScrollerHidden) {
+            	animatedControls.showScroller();
+            	$('.b-actions__action_show-thumbnails span.text').text('Hide thumbnails');
             } else {
-                $('.b-scroller').show();
-                $('.b-actions__action_show-thumbnails span.text').text('Hide thumbnails');
+            	animatedControls.hideScroller();
+            	$('.b-actions__action_show-thumbnails span.text').text('Show thumbnails');
             }
-            showImage(currentImage);
             e.preventDefault();
         });
         $('.b-scroller__image img').live('click', function(){
             showImage(parseInt($(this).attr('rel').split('_').pop()));
         });
-        var timer;
-        var controlsHidden = false;
+        var timer;        
         if (location.hash) {
             var hashImageIndex = parseInt(location.hash.substr(1));
             show($('#photo_'+hashImageIndex)[0]);

@@ -3,6 +3,10 @@
 	padding: 15px;
 }
 
+.body-gallery .b-gallery {
+	margin-top: 53px;
+}
+
 .b-gallery a
 {
 	overflow: hidden;
@@ -110,7 +114,8 @@
 	
 	.b-gallery__view__image__info__hide:hover
 	{
-		color: #888;
+		color: #111;
+		text-decoration: underline;
 	}
 
 	.b-gallery__view__image__info__link

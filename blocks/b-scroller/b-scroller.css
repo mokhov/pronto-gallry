@@ -28,7 +28,7 @@
 .b-scroller__image
 {
 	margin: 2px 5px;
-	
+	cursor: pointer;
 	display: inline-block;
 }
 
