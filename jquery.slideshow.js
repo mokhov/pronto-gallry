@@ -238,6 +238,7 @@ $.easing.custom = function (x, t, b, c, d){
             var imageIndex = parseInt($(element).attr('id').split('_').pop());
             slideshowCont.show();
             $('.b-scroller').show();
+            g_scrollerUpdate();
             $('.b-gallery').hide();
             $('.b-context-popup').hide();
             $('.b-footer').hide();
@@ -432,7 +433,7 @@ $.easing.custom = function (x, t, b, c, d){
             if(isSlideshowStarted())
             	timer = setTimeout(animatedControls.hide, 3000);
             else
-            	timer = setTimeout(animatedControls.hide, 2000);
+            	timer = setTimeout(animatedControls.hide, 10000);
         };
 
         options.images.click(function(){

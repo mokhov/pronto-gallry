@@ -4,6 +4,7 @@
     
     background: #434343 url(b-pane.gif) 0 100% repeat-x;
     color: #fff;    
+    min-width: 530px;
 }
 
 .body-gallery .b-pane {

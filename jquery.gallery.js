@@ -120,7 +120,7 @@ $(function(){
                     }
                 }
             });
-        }
+        };
         
         $(window).resize(function(){
             galleryContWidth = getGalleryContWidth();
