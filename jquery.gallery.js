@@ -91,6 +91,9 @@ $(function(){
             for (var i=0, n=data.photos.length, photos=data.photos; i<n; i++) {
                 image = $('<img/>');
                 link = $('<a/>');
+                if(isCanvasSupported()) {
+                	image.load(replaceImageToCanvas);
+                }
                 image.attr({
                     src: photos[i].src,
                     width: photos[i].thumb_inrow_width,
@@ -103,6 +106,18 @@ $(function(){
                 galleryCont.append(link);
             }
             setInrowSizes();
+        };
+        
+        var replaceImageToCanvas = function() {
+        	var canvas = document.createElement('canvas');
+        	canvas.width = this.width;
+        	canvas.height = this.height;
+        	$(canvas).css('margin-top', $(this).css('margin-top'));
+        	
+        	var ctx = canvas.getContext('2d');
+        	ctx.drawImage(this, 0, 0, this.width, this.height);
+        	$(this).after(canvas);
+        	$(this).hide();
         };
         
         var setInrowSizes = function(){
@@ -120,6 +135,16 @@ $(function(){
                     }
                 }
             });
+        };
+        
+        var _isCanvasSupported = null;
+        
+        var isCanvasSupported = function() {
+        	if(_isCanvasSupported === null) {
+        		var canvas = document.createElement('canvas');
+        		_isCanvasSupported = !!canvas.getContext && !!canvas.getContext('2d');
+        	}
+        	return _isCanvasSupported;
         };
         
         $(window).resize(function(){
