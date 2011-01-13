@@ -6,19 +6,19 @@ $(function(){
 });
 
 $.easing.custom = function (x, t, b, c, d){
-	var tt = t/d;
-	
-	var k = 0.4;
-	
+	var tt = t/d;	
+	var k = 0.5;	
 	if(tt < 0.5)
-		return .5 * (1 - Math.sqrt(1 - tt/k) * Math.sqrt(k*2));
+		var res =  .5 * (1 - Math.sqrt((0.5-tt)*k*2) / Math.sqrt(1 - k));
 	else
-		return .5 * (1 + Math.sqrt((tt-.5)/k) * Math.sqrt(k*2));
-	
-	var s = 1.70158; 
-	if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
-	return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
+		var res = .5 * (1 + Math.sqrt((tt-.5)*k*2) / Math.sqrt(1 - k));
+	return res;
 };
+
+if($.browser.msie)
+	$.easing.custom = $.easing.linear;
+//else
+//	$.easing.custom = $.easing.swing;
 
 (function( $ ){
 	var options;
@@ -55,7 +55,7 @@ $.easing.custom = function (x, t, b, c, d){
         else
         	var isSroller = !withoutControls && !isScrollerHidden && $('.b-scroller').is(':visible');
         if(isSroller)
-        	maxHeight -= 129;
+        	maxHeight -= 124;
         
         var vmargin = 0;        
         var height = options.data.photos[imageIndex].height;
@@ -353,16 +353,17 @@ $.easing.custom = function (x, t, b, c, d){
             
             newImage.animate({
                 left: (windowSize.width - imageSize.width) / 2
-            }, 500, 'custom');
+            }, 1000, 'custom');
             //остановим таймер салйдшоу, если оно запущено
             if(isSlideshowStarted)
             	clearInterval(slideshowInterval);
             
+            
             oldImage.css('position', 'relative').animate(
             	{
-	                left: delta*(oldImage.position().left - windowSize.width)
+	                left: Math.round(delta*(oldImage.position().left - windowSize.width))
 	            }
-            	, 500, 'custom',
+            	, 1000, 'custom',
             	function(){
                     oldImage.css({
                         left: 0
@@ -400,7 +401,10 @@ $.easing.custom = function (x, t, b, c, d){
         	return slideshowInterval !== false;
         };
         
-        var startSlideshow = function() {            
+        var startSlideshow = function() {   
+        	if(isSlideshowStarted()) {
+        		clearInterval(slideshowInterval);
+        	}         	
             $('.b-gallery__view__image__info').addClass('b-gallery__view__image__info_small').removeClass('b-gallery__view__image__info_full');
             showImage(currentImage);
             $('.b-actions__action_slideshow span.text').text('Stop');
@@ -507,7 +511,8 @@ $.easing.custom = function (x, t, b, c, d){
         var timer;        
         if (location.hash) {
             var hashImageIndex = parseInt(location.hash.substr(1));
-            show($('#photo_'+hashImageIndex)[0]);
+            if(!isNaN(hashImageIndex)) 
+            	show($('#photo_'+hashImageIndex)[0]);
         }
     };
 })( jQuery );

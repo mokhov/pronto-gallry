@@ -36,15 +36,18 @@ $(function(){
                 left: initLeft,
                 top: $(element).parent().offset().top - PADDING
             });  
-
-            popupCont.animate(getPopupPosition(element, elementIndex), DURATION);            
+                        
             var resultImageSize = {
             	width: galleryData.photos[elementIndex].thumb_width,
             	height: galleryData.photos[elementIndex].thumb_height
-            }; 
-            popupCont.find('img').animate(resultImageSize, DURATION, 'linear');    
+            };
+            
+            var method = $.browser.msie ? 'css' : 'animate';
+            
+            popupCont[method](getPopupPosition(element, elementIndex), DURATION);
+            popupCont.find('img')[method](resultImageSize, DURATION, 'linear');    
             //анимируем конейнер картинки            
-        	imgCont.animate(resultImageSize, DURATION, 'linear');
+        	imgCont[method](resultImageSize, DURATION, 'linear');
         };
 
         var getPopupPosition = function(element, elementIndex) {
