@@ -5,7 +5,7 @@ $(function(){
 (function( $ ){
     $.fn.popup = function(options) {
     	var PADDING = 10;
-    	var DURATION = 50;
+    	var DURATION = 150;
     	
         var popupCont = this;
         var show = function(element){
@@ -91,7 +91,7 @@ $(function(){
             var element = $(this).find('img');
             timeout = setTimeout(function(){
                 show(element);
-            }, 500);
+            }, 150);
         });
         $('.b-gallery a').mouseout(function(){
             clearTimeout(timeout);

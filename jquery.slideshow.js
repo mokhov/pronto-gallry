@@ -237,6 +237,10 @@ if($.browser.msie)
     	options = _opt;
         slideshowCont = this;        
         var shown = false;
+        var isScrollImage;
+        
+        var SCROLL_DURATION = 700;
+        var SLIDESHOW_DURATION = 3000;
         
         var animatedControls = new AnimatedControls();
         
@@ -262,6 +266,7 @@ if($.browser.msie)
             $('body').bind('click', onUserAction).css('overflow', 'hidden');
             
             shown = true;
+            isScrollImage = false;
         };
         
         var showImage = function(imageIndex, sourceImage) {
@@ -323,6 +328,9 @@ if($.browser.msie)
         };
         
         var scrollImage = function(delta) {
+        	if(isScrollImage)
+        		return;
+        	
             var newCurentImage = parseInt(currentImage)+delta;
             if (newCurentImage == galleryData.photos.length) {
                 newCurentImage = 0;
@@ -353,17 +361,19 @@ if($.browser.msie)
             
             newImage.animate({
                 left: (windowSize.width - imageSize.width) / 2
-            }, 1000, 'custom');
+            }, SCROLL_DURATION, 'custom');
             //остановим таймер салйдшоу, если оно запущено
             if(isSlideshowStarted)
             	clearInterval(slideshowInterval);
             
             
+            isScrollImage = true;
+            
             oldImage.css('position', 'relative').animate(
             	{
 	                left: Math.round(delta*(oldImage.position().left - windowSize.width))
 	            }
-            	, 1000, 'custom',
+            	, SCROLL_DURATION, 'custom',
             	function(){
                     oldImage.css({
                         left: 0
@@ -372,7 +382,9 @@ if($.browser.msie)
                     newImage.remove();
                     //возобюновим слайдшоу
                     if(isSlideshowStarted())
-                    	slideshowInterval = setInterval(scrollImageSlideshow, 3000);
+                    	slideshowInterval = setInterval(scrollImageSlideshow, SLIDESHOW_DURATION);
+                    
+                    isScrollImage = false;
                 }
             );
             currentImage = newCurentImage;
@@ -416,7 +428,7 @@ if($.browser.msie)
             $('.b-actions__action_show-thumbnails').hide();
             $('.b-actions__action_download').hide();            
             
-            slideshowInterval = setInterval(scrollImageSlideshow, 3000);
+            slideshowInterval = setInterval(scrollImageSlideshow, SLIDESHOW_DURATION);
             
         };
         
@@ -435,8 +447,25 @@ if($.browser.msie)
         };
         
         
+        var lastMouseMovePos = {x:0, y:0};
         
-        var onUserAction = function(){
+        function getMouseMoveDelta(e) {
+        	var dx = Math.abs(lastMouseMovePos.x - e.pageX);
+    		var dy = Math.abs(lastMouseMovePos.y - e.pageY);
+    		var delta = dx + dy;        		        		
+    		lastMouseMovePos.x = e.pageX;
+    		lastMouseMovePos.y = e.pageY;
+    		return delta;
+        }
+        
+        var onUserAction = function(e){
+        	if(e.type == 'mousemove') {
+        		var delta = getMouseMoveDelta(e);
+        		if(delta < 1)
+        			return;        		
+        	}
+        	
+        	
             if (animatedControls.isHidden()) {
             	animatedControls.show();
             }
