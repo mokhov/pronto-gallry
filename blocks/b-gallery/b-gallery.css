@@ -15,6 +15,12 @@
 	text-align: center;
 }
 
+.b-gallery a img
+{
+	
+	float: left;
+}
+
 .b-gallery-slideshow
 {
 	padding: 15px;
@@ -54,11 +60,13 @@
 		
 		display: inline-block;
 		text-align: center;
+		min-width: 250px;
 	}
 	
 	.b-gallery__view__image__height-wrapper
 	{
 		overflow: hidden;
+
 	}
 	
 	
@@ -67,6 +75,7 @@
 		font-family: Arial;
 		
 		padding: 5px 10px;
+		margin: 0 0;
 	}
 	
 	.b-gallery__view__image__info_full
@@ -74,11 +83,11 @@
 		position: relative;
 		
 		min-height: 4em;
-		min-width: 250px;
+		/*min-width: 250px;*/
 		
 		background: #919191;
 		
-		text-align: left;	
+		text-align: left;
 	}
 	
 	.b-gallery__view__image__info__title

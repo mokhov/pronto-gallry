@@ -1,5 +1,8 @@
 .b-scroller {
 	display: none;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
 }
 
 .b-scroller__wrapper
@@ -23,6 +26,9 @@
 
 	white-space: nowrap;	
 	/* display: inline-block; */
+	zoom: 1;
+	left: -320px;
+
 }
 
 .b-scroller__image

@@ -1,14 +1,11 @@
 .b-actions__action
 {
-    font: 1.3em Arial;
-    
-    position: relative;
-    
-    margin-left: 10px;
-    
+    font: 1.3em Arial;    
+    margin-left: 10px;    
     color: #e9e9e9;
     text-decoration: none;
     text-shadow: 0 1px 1px #000;
+	padding: 0 0 0 19px;
 }
 
 a.b-actions__action:hover
@@ -18,18 +15,18 @@ a.b-actions__action:hover
 
 .b-actions__action__icon
 {
+	display: none;
     position: absolute;
     left: 0;
-    top: 50%;
-    
+    top: 50%;    
     background: url(b-actions__action__icon.png) no-repeat;    
 }
 
 /* Share (begin) */ /**/
     .b-actions__action_share
-    {
+{
         padding-left: 18px; /* width + 3px */
-    }
+}
     
     .b-actions__action_share .b-actions__action__icon
     {
@@ -45,6 +42,7 @@ a.b-actions__action:hover
     .b-actions__action_slideshow
     {
         padding-left: 21px; /* width + 3px */
+		background: url(b-actions__action__play.png) left 1px no-repeat;
     }
     
     .b-actions__action_slideshow .b-actions__action__icon
@@ -56,14 +54,15 @@ a.b-actions__action:hover
         background-position: 0 0;
     }
 /* Slideshow (end) */ /**/
-	.b-actions__action_slideshow.stop .b-actions__action__icon
+	.b-actions__action_slideshow.stop
 	{
-		background-position: -18px 0;
+		background: url(b-actions__action__stop.png) left 1px no-repeat;
 	}
 /* Download (begin) */ /**/
     .b-actions__action_download
     {
-        padding-left: 18px; /* width + 3px */
+        padding-left: 16px; /* width + 3px */
+		background: url(b-actions__action__darrow.png) left 1px no-repeat;
     }
     
     .b-actions__action_download .b-actions__action__icon
@@ -79,7 +78,8 @@ a.b-actions__action:hover
 /* Show info (begin) */ /**/
     .b-actions__action_show-info
     {
-        padding-left: 20px; /* width + 3px */
+        padding-left: 18px; /* width + 3px */
+		background: url(b-actions__action__info.png) left 0px no-repeat;
     }
     
     .b-actions__action_show-info .b-actions__action__icon
@@ -95,7 +95,8 @@ a.b-actions__action:hover
 /* Show thumbnails (begin) */ /**/
     .b-actions__action_show-thumbnails
     {
-        padding-left: 20px; /* width + 3px */
+        padding-left: 18px; /* width + 3px */
+		background: url(b-actions__action__thumb.png) left 1px no-repeat;
     }
     
     .b-actions__action_show-thumbnails .b-actions__action__icon

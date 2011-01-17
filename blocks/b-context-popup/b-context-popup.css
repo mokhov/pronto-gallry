@@ -28,15 +28,29 @@
 	padding-top: 5px;
 }
 
+.b-context-popup__image-info__info-i
+{
+	overflow: hidden;
+	position: relative;
+}
+
+.b-context-popup__image-info__info-i-i
+{
+	position: absolute;
+}
+
 .b-context-popup__image-info__info_left {
 	padding-right: 4px;
 	overflow: hidden;
 	white-space: nowrap;
+	margin-right: 71px;
 }
 
 .b-context-popup__image-info__info_right
 {
-	text-align: right;	
+	text-align: right;
+	width: 70px;
+	float: right;
 }
 
 .b-context-popup__image-info__info__link:hover
