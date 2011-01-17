@@ -14,7 +14,7 @@ var g_scrollerUpdate;
         	var newLeft = currentLeft - delta; 
         	
         	var minLeft = 14;
-        	var maxLeft = $('.b-scroller__scrollable').outerWidth() - 16 - $('.b-scroller__scroll__position').width();
+        	var maxLeft = $('.b-scroller').outerWidth() - 16 - $('.b-scroller__scroll__position').width();
         	
             if (newLeft < minLeft) {
                 newLeft = minLeft;
@@ -78,16 +78,16 @@ var g_scrollerUpdate;
             $('.b-scroller__scrollable').append(span);
             paneWidth += Math.round(galleryData.photos[i].thumb_width * THUMB_HEIGHT / galleryData.photos[i].thumb_height) + 10;
         }
-        
-        function update() {
-        	var k = $('.b-scroller__scrollable').width() / paneWidth;
+                        
+        function update() {        	
+        	var k = $('.b-scroller').width() / paneWidth;
             if (k>1) {
                 $('.b-scroller__scroll').hide();
             } else {
                 $('.b-scroller__scroll__position').css('width', Math.round(k * 100)+'%');
             }
             
-            scrollRatio = ( $('.b-scroller__scrollable').outerWidth() - $('.b-scroller__scroll__position').width() - 14) / ( paneWidth - $('.b-scroller__scrollable').outerWidth() );
+            scrollRatio = ( $('.b-scroller').outerWidth() - $('.b-scroller__scroll__position').width() - 14) / ( paneWidth - $('.b-scroller').outerWidth() );
             scroll(0);
         }
         

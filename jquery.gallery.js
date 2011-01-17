@@ -65,10 +65,12 @@ $(function(){
             for (var i=0, n=data.photos.length, photos=data.photos; i<n; i++) {
                 photos[i].thumb_inrow_width = photos[i].thumb_fixed_width;
                 photos[i].thumb_inrow_height = photos[i].thumb_fixed_height;
+                photos[i].firstInRow = false;
                 curImagesWidth += (photos[i].thumb_cont_width ? photos[i].thumb_cont_width : photos[i].thumb_fixed_width) + options.interval;
                 if (curImagesWidth >= galleryContWidth) {
                     //k = (curImagesWidth - (i-firstInRow-1)*options.interval) / (galleryContWidth - (i-firstInRow+1)*options.interval);
                 	k = (galleryContWidth - (i-firstInRow)*options.interval) / curImagesWidth;
+                	
                     for (j=firstInRow; j<=i; j++) {
                     	
                         photos[j].thumb_inrow_width = Math.round(photos[j].thumb_fixed_width * k);
@@ -80,10 +82,12 @@ $(function(){
                             photos[j].thumb_cont_height = Math.round(photos[j].thumb_cont_height * k);
                         }
                     }
+                    photos[firstInRow].firstInRow = true;
                     curImagesWidth = 0;
                     firstInRow = i + 1;
                 }
             }
+            photos[firstInRow].firstInRow = true;
         };
         
         var createImages = function(){
@@ -105,6 +109,7 @@ $(function(){
                 link.append(image);
                 galleryCont.append(link);
             }
+            galleryCont.append('<div class="clearer"></div>');
             setInrowSizes();
         };
         
@@ -120,7 +125,7 @@ $(function(){
         	$(this).hide();
         };
         
-        var setInrowSizes = function(){
+        var setInrowSizes = function(updateCanvas){
             var photos = galleryData.photos;
             galleryCont.find('img').each(function(i){
                 $(this).attr({
@@ -134,6 +139,13 @@ $(function(){
                         $(this).css('margin-top', (photos[i].thumb_cont_height - photos[i].thumb_inrow_height)/2);
                     }
                 }
+                if(updateCanvas && isCanvasSupported()) {
+                	$(this).show();
+                	$(this).parent().find('canvas').remove();
+                	replaceImageToCanvas.call(this);
+                }
+                if(data.photos[i].firstInRow)
+                	$(this).parent().before('<div class="clearer js_galery_clearer"></div>');
             });
         };
         
@@ -148,10 +160,12 @@ $(function(){
         };
         
         $(window).resize(function(){
+        	$('.js_galery_clearer').remove();
+        	
             galleryContWidth = getGalleryContWidth();
             obeyConstraints();
             splitByRows();
-            setInrowSizes();
+            setInrowSizes(true);
         });
         
         var galleryCont = this;

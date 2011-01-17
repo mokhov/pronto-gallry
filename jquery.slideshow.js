@@ -267,6 +267,13 @@ if($.browser.msie)
             
             shown = true;
             isScrollImage = false;
+            //IE6 fix
+            if($.browser.msie) {
+            	$('.b-gallery__view__nav').hide();
+	            setTimeout(function(){
+	            	$('.b-gallery__view__nav').show();
+	            },10);
+            }
         };
         
         var showImage = function(imageIndex, sourceImage) {
@@ -317,8 +324,8 @@ if($.browser.msie)
             $('.b-pane__photos-count').show();
             $('.b-actions__action_show-thumbnails, .b-actions__action_show-info, .b-actions__action_download').hide();
             
-            $('body').unbind('mousemove', onUserAction).css('overflow', 'auto');
-            $('body').unbind('click', onUserAction).css('overflow', 'auto');
+            $('body').unbind('mousemove', onUserAction).css('overflow', '');
+            $('body').unbind('click', onUserAction);
             
             clearTimeout(timer);
             

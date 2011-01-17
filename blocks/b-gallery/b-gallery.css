@@ -211,3 +211,5 @@
 	
 	background-position: 0 100%;
 }
+
+.clearer {clear: both; height: 0; font-size: 0; overflow: hidden;}
