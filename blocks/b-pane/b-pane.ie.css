@@ -1,3 +1,8 @@
+body{
+  background:url(about:blank);
+  background-attachment: fixed;
+}
+
 * html .body-gallery .b-pane {_position: absolute; _top: expression(parseInt(document.body.scrollTop) + "px")!important;}
 
 .b-pane__additional
